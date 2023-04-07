@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html id="abc">
+
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-control" content="no-cache,must-revalidate">
+        <meta http-equiv="Cache" content="no-cache">
+        <link rel="icon" href="./static/logo.png">
+        <title>年度数据</title>
+        <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+        <style>
+                #abc {
+                        height: 100%;
+                }
+
+                #dom1,
+                #dom2,
+                #dom3,
+                #dom4,
+                #dom5,
+                #dom6,
+                #dom7,
+                #dom8 {
+                        height: 175px;
+                }
+
+
+                div {
+                        margin: 0;
+                        padding: 0;
+                }
+
+                body {
+                        height: 100%;
+                        margin: 0;
+                        background-color: #CCFFFF;
+                }
+        </style>
+</head>
+
+<body onclick="reloadPage();">
+
+
+        <!-- 背景音乐 -->
+        <div id="music">
+
+                <audio loop="true" id="bgm">
+                        <source id="bg_music">
+                </audio>
+
+        </div>
+
+        <div id="dom1">
+        </div>
+
+        <div id="dom2">
+        </div>
+
+        <div id="dom3">
+        </div>
+
+        <div id="dom4">
+        </div>
+
+        <div id="dom5">
+        </div>
+
+        <div id="dom6">
+        </div>
+
+        <div id="dom7">
+        </div>
+
+        <div id="dom8">
+        </div>
+
+        <script type="text/javascript">
+
+//-------------------------new_params_start----------------------------------
+var new_year = 2023
+var new_param1 = 78
+var new_param2 = 63
+var new_param3 = 2998
+var new_param4 = 6
+var new_param5 = 3
+var new_param6 = 28
+var new_param7 = 20
+var new_param8 = 16
+var bg_music = '挪威的森林.mp3'
+//--------------------------new_params_end-----------------------------------
+
+//-------------------------params_start--------------------------------------
+var yearArr = [new_year]
+var arr1 = [new_param1]
+var arr2 = [new_param2]
+var arr3 = [new_param3]
+var arr4 = [new_param4]
+var arr5 = [new_param5]
+var arr6 = [new_param6]
+var arr7 = [new_param7]
+var arr8 = [new_param8]
+
+var param_name_arr = ['睡眠质量好的天数','能量值达到8以上天数','平均每日入账额','平均每日focus时间','完成任务日速度','读书天数','','弹吉他天数']
+var color_arr = ['DarkViolet','DarkCyan','OliveDrab','Fuchsia','DarkViolet','DarkCyan','OliveDrab','Fuchsia']
+//-----------------------------params_end-----------------------------------
+
+$("#bg_music").attr("src","./static/mp3/" + bg_music)
+
+                for (var i = 0; i < 8; i++) {
+
+                        eval('var arr = arr' + (i + 1))
+
+                        var is_show = false
+                        if (i % 4 == 3) {
+                                is_show = true
+                        }
+
+                        var pointArr = new Array();
+                        for (var k = 0; k < arr.length; k++) {
+                                point = {
+                                        value: arr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: color_arr[i],
+                                                }
+
+                                        },
+                                        symbol: 'circle',
+                                        symbolSize: 10
+                                };
+
+                                pointArr.push(point);
+
+                        }
+
+
+                        var option = {
+                                title: {
+                                        text: param_name_arr[i],
+                                        x: 'left',
+                                        y: 'center',
+                                        textStyle: {
+                                                color: 'DarkOrange',
+                                                fontSize: 15,
+                                        },
+                                },
+                                xAxis: {
+                                        type: 'category',
+                                        data: yearArr,
+                                        show: is_show,
+                                        axisLabel: {
+                                                rotate: 45, // 旋转角度
+                                                interval: 0  //设置X轴数据间隔几个显示一个，为0表示都显示
+                                        },
+                                },
+                                yAxis: {
+                                        type: 'value',
+                                        show: false,
+                                        splitLine: {
+                                                show: false
+                                        },
+
+
+                                },
+                                series: [
+
+                                        {
+                                                data: pointArr,
+                                                label: {
+                                                        show: true,
+                                                        position: 'top',
+                                                        fontSize: 10,
+                                                },
+                                                type: 'line',
+                                                smooth: true,
+
+                                        },
+
+                                ],
+                                color: '#FFA07A'
+                        }
+
+                        echarts.init(document.getElementById('dom' + (i + 1))).setOption(option, true);
+
+
+
+                }
+
+
+                function reloadPage() {
+                        window.location.reload();
+                }
+
+
+                //背景音乐
+                var bgm = document.getElementById('bgm');
+                document.onkeydown = function (e) {
+                        var theEvent = window.event || e;
+                        var code = theEvent.keyCode || theEvent.which;
+
+                        //回车播放或者暂停音乐
+                        if (code == 13) {
+                                if (bgm.paused) {
+                                        bgm.play();
+                                        return;
+                                } else {
+                                        bgm.pause();
+                                        return;
+                                }
+
+                        } else
+
+                                //1键打开本月汇总数据页面
+                                if (code == 49) {
+                                        window.open('https://www.tomorrowcat.com/monSum.html', '_blank');
+                                } else
+
+                                        //2键打开今年汇总数据页面
+                                        if (code == 50) {
+                                                window.open('https://www.tomorrowcat.com/yearSum.html', '_blank');
+                                        } else
+
+
+                                                //3键打开汇总页面
+                                                if (code == 51) {
+                                                        window.open('https://www.tomorrowcat.com/sum.html', '_blank');
+                                                } else
+
+
+                                                        //4键打开最近24个月数据
+                                                        if (code == 52) {
+                                                                window.open('https://www.tomorrowcat.com/mons.html', '_blank');
+                                                        } else
+
+                                                        //其他任意键刷新页面
+                                                        {
+                                                                window.location.reload();
+                                                        }
+                }
+
+
+                //窗口激活则刷新页面
+                $(window).focus(function () {
+                        window.location.reload();
+                });
+
+
+        </script>
+</body>
+
+</html>
+
+
+

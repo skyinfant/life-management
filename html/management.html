@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-control" content="no-cache,must-revalidate">
+        <meta http-equiv="Cache" content="no-cachei">
+        <link rel="icon" href="./static/logo.png">
+        <title>资产&nbsp;&nbsp;&nbsp;&nbsp;善缘&nbsp;&nbsp;&nbsp;&nbsp;正期望</title>
+        <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+        <style>
+                body {
+                        height: 100%;
+                        margin: 0;
+                        background-color: #CCFFFF;
+                }
+
+                #dom1,
+                #dom2,
+                #dom3 {
+                        float: left;
+                        width: 33%;
+                        height: 110%;
+                }
+
+                #dom4,
+                #dom5,
+                #dom6,
+                #dom7 {
+                        height: 32%;
+                }
+
+                div {
+                        margin: 0;
+                        padding: 0;
+                }
+        </style>
+
+
+</head>
+
+<body onclick="reloadPage();">
+
+        <!-- 背景音乐 -->
+        <div id="music">
+
+                <audio loop="true" id="bgm">
+                        <source id="bg_music">
+                </audio>
+
+        </div>
+
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+        <div style="height: 22%;">
+                <div id="dom1">
+                </div>
+                <div id="dom2">
+                </div>
+                <div id="dom3">
+                </div>
+        </div>
+
+        <div style="height: 80%;">
+                <div id="dom4">
+                </div>
+
+                <div id="dom5">
+                </div>
+
+                <div id="dom6">
+                </div>
+
+                <div id="dom7">
+                </div>
+        </div>
+
+
+        <script type="text/javascript">
+
+
+//-------------------------new_params_start----------------------------------
+var goodSleep = 0
+var badSleep = 0
+var energyTitle = '2023平均能量值：0'
+var highEnergy = 0
+var lowEnergy = 0
+var completed = 0
+var uncompleted = 1000000
+var zonghezichan = '综合资产\n\n0元\n\n0小时'
+var date_today = '4.7'
+var income_today = 0
+var taskNum_today = 0
+var focusTime_today = 0
+var energy_today = 0
+var bg_music = '亲爱的旅人.mp3'
+//--------------------------new_params_end-----------------------------------
+
+//-------------------------params_start--------------------------------------
+var dateArr = [date_today]
+var incomeArr = [income_today]
+var taskNumArr = [taskNum_today]
+var focusTimeArr = [focusTime_today]
+var energyArr = [energy_today]
+var sleepTitle = '2023年度睡眠质量'
+//-----------------------------params_end-----------------------------------
+
+$("#bg_music").attr("src","./static/mp3/" + bg_music)
+
+                //年度睡眠质量
+                var myChart1 = echarts.init(document.getElementById('dom1'));
+
+                //年度能量状态
+                var myChart2 = echarts.init(document.getElementById('dom2'));
+
+                //综合资产
+                var myChart3 = echarts.init(document.getElementById('dom3'));
+
+                //每日完成任务量
+                var myChart4 = echarts.init(document.getElementById('dom4'));
+
+                //每日focus时间
+                var myChart5 = echarts.init(document.getElementById('dom5'));
+
+                //每日能量水平
+                var myChart6 = echarts.init(document.getElementById('dom6'));
+
+                //每日收益
+                var myChart7 = echarts.init(document.getElementById('dom7'));
+
+
+                //年度睡眠质量
+                myChart1.setOption({
+                        title: {
+                                text: sleepTitle,
+                                x: '6%',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        series: [{
+                                type: 'pie',
+                                // 设置图表类型为饼图
+                                radius: '60%',
+                                // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                data: [ // 数据数组，name 为数据项名称，value 为数据项值
+                                        {
+                                                value: goodSleep,
+                                                name: 'good sleep'
+                                        },
+                                        {
+                                                value: badSleep,
+                                                name: 'bad sleep'
+                                        },
+                                ],
+                                itemStyle: {
+                                        emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        },
+                                        normal: {
+                                                label: {
+                                                        show: true,
+                                                        formatter: '{b}({d}%)'
+                                                },
+                                                labelLine: { show: true }
+                                        }
+                                }
+                        }],
+                        color: ['#FF69B3', 'black']
+
+
+                });
+
+
+                //年度能量状态
+                myChart2.setOption({
+                        title: {
+                                text: energyTitle,
+                                x: '0%',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        series: [{
+                                type: 'pie',
+                                // 设置图表类型为饼图
+                                radius: '60%',
+                                // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                data: [ // 数据数组，name 为数据项名称，value 为数据项值
+                                        {
+                                                value: highEnergy,
+                                                name: '8以上 '
+                                        },
+                                        {
+                                                value: lowEnergy,
+                                                name: '低于8 '
+                                        },
+                                ],
+                                itemStyle: {
+                                        emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        },
+                                        normal: {
+                                                label: {
+                                                        show: true,
+                                                        formatter: '{b}({d}%)'
+                                                },
+                                                labelLine: { show: true }
+                                        }
+                                }
+                        }],
+                        color: ['#FF6347', 'black']
+
+
+                });
+
+
+
+                //综合资产
+                myChart3.setOption({
+                        title: {
+                                text: zonghezichan,
+                                x: '18%',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        series: [{
+                                type: 'pie',
+                                // 设置图表类型为饼图
+                                radius: '60%',
+                                // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                data: [ // 数据数组，name 为数据项名称，value 为数据项值
+                                        {
+                                                value: completed,
+                                                name: '已完成'
+                                        },
+                                        {
+                                                value: uncompleted,
+                                                name: '未完成'
+                                        },
+                                ],
+                                itemStyle: {
+                                        emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        },
+                                        normal: {
+                                                label: {
+                                                        show: true,
+                                                        formatter: '{b}({d}%)'
+                                                },
+                                                labelLine: { show: true }
+                                        }
+                                }
+                        }],
+                        color: ['#FE7F0B', '#1F78B4']
+                });
+
+
+                //每日完成任务量
+                var pointArr1 = new Array();
+                for (var k = 0; k < taskNumArr.length; k++) {
+                        var point1 = {};
+                        var point2 = {};
+
+                        //完成任务量大于0的点
+                        if (taskNumArr[k] >= 8) {
+                                point1 = {
+                                        value: taskNumArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'DarkViolet'
+                                                }
+
+                                        },
+                                        symbol: 'circle',
+                                        symbolSize: 12
+                                };
+                                pointArr1.push(point1);
+                                //完成任务量等于0的点
+                        } else {
+                                point2 = {
+                                        value: taskNumArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'SlateGray'
+                                                }
+
+                                        },
+                                        symbol: 'emptyCircle',
+                                        symbolSize: 8
+                                };
+                                pointArr1.push(point2);
+                        }
+                        point1 = undefined;
+                        point2 = undefined;
+                }
+
+
+                //每日focus时间
+                var pointArr2 = new Array();
+                for (var k = 0; k < focusTimeArr.length; k++) {
+                        var point1 = {};
+                        var point2 = {};
+
+                        //focus时间大于等于6的点
+                        if (focusTimeArr[k] >= 10) {
+                                point1 = {
+                                        value: focusTimeArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'DarkCyan'
+                                                }
+
+                                        },
+                                        symbol: 'circle',
+                                        symbolSize: 12
+                                };
+                                pointArr2.push(point1);
+                                //focus时间小于6的点
+                        } else {
+                                point2 = {
+                                        value: focusTimeArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'SlateGray'
+                                                }
+
+                                        },
+                                        symbol: 'emptyCircle',
+                                        symbolSize: 8
+                                };
+                                pointArr2.push(point2);
+                        }
+                        point1 = undefined;
+                        point2 = undefined;
+                }
+
+
+                //每日收益
+                var pointArr3 = new Array();
+                for (var k = 0; k < incomeArr.length; k++) {
+                        var point1 = {};
+                        var point2 = {};
+                        //遵从一睡
+                        if (incomeArr[k] >= 8000) {
+                                point1 = {
+                                        value: incomeArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'OliveDrab '
+                                                }
+
+                                        },
+                                        symbol: 'circle',
+                                        symbolSize: 12
+                                };
+                                pointArr3.push(point1);
+                                //违背一睡
+                        } else {
+                                point2 = {
+                                        value: incomeArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'SlateGray'
+                                                }
+
+                                        },
+                                        symbol: 'emptyCircle',
+                                        symbolSize: 8
+                                };
+                                pointArr3.push(point2);
+                        }
+                        point1 = undefined;
+                        point2 = undefined;
+                }
+
+
+                //每日能量状态
+                var pointArr4 = new Array();
+                for (var k = 0; k < energyArr.length; k++) {
+                        var point1 = {};
+                        var point2 = {};
+                        var point3 = {};
+
+                        if (energyArr[k] >= 8) {
+                                point1 = {
+                                        value: energyArr[k],
+                                        itemStyle: {
+                                                normal: {
+                                                        color: 'green'
+                                                }
+
+                                        },
+                                        symbol: 'pin',
+                                        symbolSize: 16
+                                };
+                                pointArr4.push(point1);
+                                //
+                        } else
+
+                                if (energyArr[k] == 0) {
+                                        point2 = {
+                                                value: energyArr[k],
+                                                itemStyle: {
+                                                        normal: {
+                                                                color: 'red'
+                                                        }
+
+                                                },
+                                                symbol: 'pin',
+                                                symbolSize: 16
+                                        };
+                                        pointArr4.push(point2);
+
+                                } else {
+
+                                        point3 = {
+                                                value: energyArr[k],
+                                                itemStyle: {
+                                                        normal: {
+                                                                color: 'Fuchsia'
+                                                        }
+
+                                                },
+                                                symbol: 'pin',
+                                                symbolSize: 16
+                                        };
+                                        pointArr4.push(point3);
+
+
+                                }
+
+                        point1 = undefined;
+                        point2 = undefined;
+                        point3 = undefined;
+                }
+
+
+                //每日完成任务量
+                var option1 = {
+                        title: {
+                                text: "    完成任务量",
+                                x: 'left',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        xAxis: {
+                                type: 'category',
+                                data: dateArr,
+                                show: false,
+                                axisLabel: {
+                                        rotate: 45, // 旋转角度
+                                        interval: 0  //设置X轴数据间隔几个显示一个，为0表示都显示
+                                },
+                        },
+                        yAxis: {
+                                type: 'value',
+                                show: false,
+                                splitLine: {
+                                        show: false
+                                },
+                                // axisLabel: {
+                                //         show: false, // 不显示坐标轴上的文字
+                                // },
+
+                        },
+                        series: [{
+                                data: pointArr1,
+                                label: {
+                                        show: true,
+                                        position: 'top',
+                                        fontSize: 11,
+                                },
+                                type: 'line',
+                                smooth: true
+                        },
+
+
+                        ],
+                        color: '#FFA07A'
+                }
+
+
+                //每日focus时间
+                var option2 = {
+                        title: {
+                                text: "    focus时间",
+                                x: 'left',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        xAxis: {
+                                type: 'category',
+                                data: dateArr,
+                                show: false,
+                                axisLabel: {
+                                        rotate: 45, // 旋转角度
+                                        interval: 0  //设置X轴数据间隔几个显示一个，为0表示都显示
+                                },
+                        },
+                        yAxis: {
+                                type: 'value',
+                                show: false,
+                                splitLine: {
+                                        show: false
+                                },
+                                // axisLabel: {
+                                //         show: false, // 不显示坐标轴上的文字
+                                // },
+
+                        },
+                        series: [{
+                                data: pointArr2,
+                                label: {
+                                        show: true,
+                                        position: 'top',
+                                        fontSize: 11,
+                                },
+                                type: 'line',
+                                smooth: true
+                        },
+
+
+                        ],
+                        color: '#FFA07A'
+                }
+
+
+                //每日收益
+                var option3 = {
+                        title: {
+                                text: '      收益指数',
+                                x: 'left',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        xAxis: {
+                                type: 'category',
+                                data: dateArr,
+                                show: false,
+                                axisLabel: {
+                                        rotate: 45, // 旋转角度
+                                        interval: 0  //设置X轴数据间隔几个显示一个，为0表示都显示
+                                },
+                        },
+                        yAxis: {
+                                type: 'value',
+                                show: false,
+                                splitLine: {
+                                        show: false
+                                },
+                                // axisLabel: {
+                                //         show: false, // 不显示坐标轴上的文字
+                                // },
+
+                        },
+                        series: [
+
+                                {
+                                        data: pointArr3,
+                                        label: {
+                                                show: true,
+                                                position: 'top',
+                                                fontSize: 11,
+                                        },
+                                        type: 'line',
+                                        smooth: true
+                                },
+
+
+
+
+                        ],
+                        color: '#FFA07A'
+                }
+
+
+
+                //每日能量水平
+                var option4 = {
+                        title: {
+                                text: "      能量水平",
+                                x: 'left',
+                                y: 'center',
+                                textStyle: {
+                                        color: 'DarkOrange',
+                                        fontSize: 16,
+                                },
+                        },
+                        xAxis: {
+                                type: 'category',
+                                data: dateArr,
+                                axisLabel: {
+                                        rotate: 45, // 旋转角度
+                                        interval: 0  //设置X轴数据间隔几个显示一个，为0表示都显示
+                                },
+                        },
+                        yAxis: {
+                                type: 'value',
+                                show: false,
+                                splitLine: {
+                                        show: false
+                                },
+                                // axisLabel: {
+                                //         show: false, // 不显示坐标轴上的文字
+                                // },
+
+                        },
+                        series: [
+
+                                {
+                                        data: pointArr4,
+                                        label: {
+                                                show: true,
+                                                position: 'top',
+                                                fontSize: 11,
+                                        },
+                                        type: 'line',
+                                        smooth: true,
+
+                                },
+
+                        ],
+                        color: '#FFA07A'
+                }
+
+
+
+
+                //每日能量状态
+                // option1.series[0].label.formatter = function (params) {
+                //         var num = params.value - 40000;
+                //         var energy = num / 1000;
+
+                //         return (energy);
+                // };
+
+
+
+                //每日完成任务量
+                // option1.series[0].label.formatter = function (params) {
+                //       var num = params.value;
+                //     var taskNum = parseInt(num / 100);
+                //   var focusTime = num % 100
+                // return ((taskNum + '-' + focusTime.toFixed(1)).replace('\.0', ''));
+                //};
+
+
+                //每日完成任务量
+                myChart4.setOption(option1, true);
+
+                //每日focus时间
+                myChart5.setOption(option2, true);
+
+                //每日能量水平
+                myChart6.setOption(option3, true);
+
+                //每日收益
+                myChart7.setOption(option4, true);
+
+
+                function reloadPage() {
+                        window.location.reload();
+                }
+
+
+                //背景音乐
+                var bgm = document.getElementById('bgm');
+                document.onkeydown = function (e) {
+                        var theEvent = window.event || e;
+                        var code = theEvent.keyCode || theEvent.which;
+
+                        //回车播放或者暂停音乐
+                        if (code == 13) {
+                                if (bgm.paused) {
+                                        bgm.play();
+                                        return;
+                                } else {
+                                        bgm.pause();
+                                        return;
+                                }
+
+                        } else
+
+                                //1键打开本月汇总数据页面
+                                if (code == 49) {
+                                        window.open('https://www.tomorrowcat.com/monSum.html', '_blank');
+                                } else
+
+                                        //2键打开今年汇总数据页面
+                                        if (code == 50) {
+                                                window.open('https://www.tomorrowcat.com/yearSum.html', '_blank');
+                                        } else
+
+
+                                                //3键打开汇总页面
+                                                if (code == 51) {
+                                                        window.open('https://www.tomorrowcat.com/sum.html', '_blank');
+                                                } else
+
+
+                                                        //4键打开最近24个月数据
+                                                        if (code == 52) {
+                                                                window.open('https://www.tomorrowcat.com/mons.html', '_blank');
+                                                        } else
+
+
+                                                                //5键打开历年数据
+                                                                if (code == 53) {
+                                                                        window.open('https://www.tomorrowcat.com/years.html', '_blank');
+                                                                } else
+
+
+
+                                                                //其他任意键刷新页面
+                                                                {
+                                                                        window.location.reload();
+                                                                }
+                }
+
+
+
+                //窗口激活则刷新页面
+                $(window).focus(function () {
+                        window.location.reload();
+                });
+
+
+        </script>
+</body>
+
+</html>
+
+
+
