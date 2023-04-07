@@ -474,10 +474,13 @@ if [ $key = 6 ];then
 		if [ "$a2" ] && [ "$a2" = $init_system_secret ];then	
 		
 			echo -e "\n正在初始化......\n"
-			
-			#备份
-			fuffix=`time_str`
-			zip -ry ./life-management_$fuffix.zip ../life-management -x=*.mp3 &> /dev/null
+		
+			if [ $current_version != 1.0 ];then	
+				#备份
+				fuffix=`time_str`
+				zip -ry ./life-management_$fuffix.zip ../life-management -x=*.mp3 &> /dev/null
+
+			fi
 			
 			#清空收益流水
 			echo '' > $income_file
