@@ -85,7 +85,8 @@ yearSum_page_music="晴天.mp3"
 sum_page_music="流行的云.mp3"
 
 
-#初始化系统密钥
+
+#初始化系统密钥,第一次初始化不需要
 init_system_secret=439826577
 
 
