@@ -34,6 +34,8 @@ text="All in management, then you'll find your real life."
 
 [ $task_is_stop -eq 1 ] && [ $remaining_task_days -le 0 ] && text="任务 【$task_name_A1】 已到达最后期限！"
 
+[ ! "$task_name_A1" ] && task_name_A1='未设置'
+
 #===================================================================================================
 clear
 echo -e "\n"
