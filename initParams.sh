@@ -7,7 +7,7 @@ source ./funcs.sh
 
 #防止误操作
 hour=`date "+%H"`
-#[ $hour -ne 0 ] && exit_script3
+[ $hour -ne 0 ] && exit_script3
 
 #开始计时
 start=`tstamp_s`
