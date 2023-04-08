@@ -488,6 +488,9 @@ if [ $key = 6 ];then
 			#关闭页面开关
 			#changeFile $configFile mons_and_years_page_flag 2
 
+			#标记为已进行系统初始化
+			changeFile $configFile is_init_system 2
+
 			#干掉非核心参数
 			#start_row=`getRowNum $paramFile \#system_core_params 3`
 			#let start_row=start_row+3
@@ -498,11 +501,6 @@ if [ $key = 6 ];then
 			#升级版本
 			doubleAddOrSub 1 0.1 add current_version
             
-			#创建存放今年日志的文件夹
-            baseDir=./data/note/life/$year
-            [ ! -d $baseDir ] && mkdir -p $baseDir
-
-			
 			#初始化非系统参数
 			start_row=`getRowNum $paramFile \#system-2 3`
 			let start_row=start_row+1

@@ -922,6 +922,11 @@ printSeparatorByDate() {
 
 	fi
 
+	 #创建存放今年日志的文件夹
+     noteDir=./data/note/life/$year
+     [ ! -d $noteDir ] && mkdir -p $noteDir
+
+
 	[ $sep ] && echo -e $sep >>$file
 
 	#如果该文件不存在，则创建并追加空行
@@ -955,6 +960,10 @@ printSeparatorByDate2() {
 		[ $mode -eq 1 ] && [[ $row != $current_mon* ]] && sep="==============================================================\n"
 
 	fi
+
+	 #创建存放今年日志的文件夹
+     noteDir=./data/note/life/$year
+     [ ! -d $noteDir ] && mkdir -p $noteDir
 
 	[ $sep ] && echo -e $sep >>$file
 

@@ -61,10 +61,6 @@ if [ "$mon_day" = "1.1" ]; then
 
 	changeParams 1 write_params_to_year_file_flag
 
-	#创建存放今年日志的文件夹
-	baseDir=./data/note/life/$year
-	[ ! -d $baseDir ] && mkdir -p $baseDir
-	
 fi
 
 
