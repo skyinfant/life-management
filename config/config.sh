@@ -4,7 +4,7 @@
 
 #月度页面和年度页面总开关  1--开启    2--关闭
 #必须确保下面的参数全部存在数据库中才能开启，否则会报错
-mons_and_years_page_flag=2
+mons_and_years_page_flag=1
 
 
 #月度页面(mons.html)8个折线图的参数（必须以 mon_ 开头）
@@ -22,7 +22,7 @@ mon_param6=mon_reading_days
 
 mon_param7=mon_sport_days
 
-mon_param8=mon_guitar_days
+mon_param8=mon_english_days
 
 
 
@@ -41,7 +41,7 @@ year_param6=year_reading_days
 
 year_param7=year_sport_days
 
-year_param8=year_guitar_days
+year_param8=year_english_days
 
 
 
@@ -83,7 +83,6 @@ yearSum_page_music="晴天.mp3"
 
 #汇总页面
 sum_page_music="流行的云.mp3"
-
 
 
 #初始化系统密钥,第一次初始化不需要

@@ -62,7 +62,7 @@ cat > $file <<EOF
 <p>睡眠质量好的比例：$rate_total_good_sleep_days</p>
 <p>平均每月睡眠质量好的天数：$ave_total_mon_good_sleep_days</p>
 <p>平均每年睡眠质量好的天数：$ave_total_year_good_sleep_days</p>
-<p>睡眠质量差的天数：$total_no_good_sleep_days</p>
+<p>睡眠质量差的天数：$total_bad_sleep_days</p>
 <br><br>
 
 

@@ -102,14 +102,14 @@ des_ave_total_year_good_sleep_days='总计平均每年睡眠质量好的天数'
 ave_total_year_good_sleep_days=0
 
 
-des_mon_no_good_sleep_days='本月睡眠质量差的天数'
-mon_no_good_sleep_days=0
+des_mon_bad_sleep_days='本月睡眠质量差的天数'
+mon_bad_sleep_days=0
 
-des_year_no_good_sleep_days='今年睡眠质量差的天数'
-year_no_good_sleep_days=0
+des_year_bad_sleep_days='今年睡眠质量差的天数'
+year_bad_sleep_days=0
 
-des_total_no_good_sleep_days='总计睡眠质量差的天数'
-total_no_good_sleep_days=0
+des_total_bad_sleep_days='总计睡眠质量差的天数'
+total_bad_sleep_days=0
 
 des_sleep_record_flag='睡眠记录标志（1--未记录，2--已记录 以避免忘记做睡眠记录）'
 sleep_record_flag=1

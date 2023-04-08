@@ -60,7 +60,7 @@ cat > $file <<EOF
 <br><br>
 <p>睡眠质量好的天数：$mon_good_sleep_days</p>
 <p>睡眠质量好的比例：$rate_mon_good_sleep_days</p>
-<p>睡眠质量差的天数：$mon_no_good_sleep_days</p>
+<p>睡眠质量差的天数：$mon_bad_sleep_days</p>
 <br><br>
 
 

@@ -486,7 +486,7 @@ if [ $key = 6 ];then
 			echo '' > $income_file
 			
 			#关闭页面开关
-			changeFile $configFile mons_and_years_page_flag 2
+			#changeFile $configFile mons_and_years_page_flag 2
 
 			#干掉非核心参数
 			#start_row=`getRowNum $paramFile \#system_core_params 3`
@@ -502,10 +502,6 @@ if [ $key = 6 ];then
             baseDir=./data/note/life/$year
             [ ! -d $baseDir ] && mkdir -p $baseDir
 
-            baseDir=./data/note/life/other
-            [ ! -d $baseDir ] && mkdir -p $baseDir
-
-			
 			
 			#初始化非系统参数
 			start_row=`getRowNum $paramFile \#system-2 3`

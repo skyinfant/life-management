@@ -17,10 +17,10 @@ badSleep()
         addOrSub +1 mon_low_energy_days year_low_energy_days total_low_energy_days
         changeParams 2 high_energy_days_count_flag
 
-        addOrSub +1 mon_no_good_sleep_days year_no_good_sleep_days total_no_good_sleep_days
+        addOrSub +1 mon_bad_sleep_days year_bad_sleep_days total_bad_sleep_days
 
 		#计算收益
-		compute_income -3000 no_good_sleep_days
+		compute_income -3000 bad_sleep_days
 
         #更改编辑标志
         changeParams 2 sleep_record_flag

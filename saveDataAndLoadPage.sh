@@ -46,7 +46,7 @@ if [ $1 -eq 1 ];then
 	flush
 	
 	 param1="var goodSleep = $year_good_sleep_days\n"
-	 param2="var badSleep = $year_no_good_sleep_days\n"
+	 param2="var badSleep = $year_bad_sleep_days\n"
 	 param3="var energyTitle = '$year平均能量值：$ave_year_day_energy'\n"
 	 param4="var highEnergy = $year_high_energy_days\n"
 	 param5="var lowEnergy = $year_low_energy_days\n"

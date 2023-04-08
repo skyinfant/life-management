@@ -21,7 +21,7 @@ cat > $file <<EOF
 睡眠质量好的天数：$year_good_sleep_days
 睡眠质量好的比例：$rate_year_good_sleep_days
 平均每月睡眠质量好的天数：$ave_year_mon_good_sleep_days
-睡眠质量差的天数：$year_no_good_sleep_days
+睡眠质量差的天数：$year_bad_sleep_days
 
 
 能量值：$year_energy
