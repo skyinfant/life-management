@@ -1071,7 +1071,10 @@ isNum()
 {
 
 	if [ "$1" ];then
-		str1523=`echo $1 | sed  's/\.//g' | sed 's/-//g'`
+
+		str1523=`echo "$1" | sed  's/\.//g'`
+		[[ "$str1523" = -* ]] && str1523=`echo "$str1523" | cut -c 2-`
+
 	    if grep '^[[:digit:]]*$' <<< "$str1523" &> /dev/null;then
 		
 			echo 1

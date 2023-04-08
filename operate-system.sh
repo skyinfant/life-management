@@ -42,7 +42,7 @@ if [ $key = 1 ];then
 	
 			echo -ne "\n\n参数类型  1--按天数计   2--按次数计   3--普通参数(比如时间，数额等)："
 			read a2
-			if [ "$a2" ] ;then
+			if [ `isNum "$a2"` ];then
 			
 				echo -ne "\n\n用于定位的块名称(比如sport)，添加到参数文件最后的话就输入0："
 				read a3
@@ -57,7 +57,7 @@ if [ $key = 1 ];then
 						a4=1
 					fi
 
-					if [ "$a4" ] ;then
+					if [ `isNum "$a4"` ] ;then
 					
 						echo -ne "\n\n要添加的参数块的英文名和中文名，一定要成对填，比如 sport 运动 reading 读书 play_game 玩游戏 : "
 						read a5
@@ -79,7 +79,7 @@ if [ $key = 1 ];then
 						
 							echo -ne "\n\n参数模板 1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入0："
 							read a6
-							if [ "$a6" ] ;then	
+							if [ `isNum "$a6"` ] ;then	
 
 								echo -e "-----------------------------------------------\n"	
 
@@ -130,7 +130,7 @@ if [ $key = 1 ];then
 			
 				echo -ne "\n\n参数插入位置 1--放到定位参数 $a2 前   2--放到定位参数 $a2 后："
 				read a3
-				if [ "$a3" ] ;then
+				if [ `isNum "$a3"` ] ;then
 				
 					echo -ne "\n\n要插入的参数，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
 					read a4
@@ -259,7 +259,7 @@ if [ $key = 3 ];then
 					
 			fi
 			
-            if [ "$a3" ];then
+            if [ `isNum "$a3"` ];then
                 flag=1
 				core_row=`getRowNum $paramFile "\#system_core_params" 3`
 				row_count=`getRowCount $paramFile`
@@ -422,11 +422,11 @@ if [ $key = 5 ];then
 
 		echo -ne "\n\n请输入任务期限(天)："
 		read a2
-		if [ "$a2" ];then
+		if [ `isNum "$a2"` ];then
 		
 			echo -ne "\n\n请输入总任务数："
 			read a3
-			if [ "$a3" ];then
+			if [ `isNum "$a3"` ];then
 				
 				changeParams 1 task_is_stop
 				changeParams "'$a1'" task_name_A1
