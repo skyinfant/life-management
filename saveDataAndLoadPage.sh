@@ -58,9 +58,10 @@ if [ $1 -eq 1 ];then
 	 param11="var taskNum_today = $today_task_num_A1\n"
 	 param12="var focusTime_today = $today_focus_time\n"
 	 param13="var energy_today = $today_energy\n"
-	 param14="var bg_music = '$daily_page_music'"
+	 param14="var bg_music = '$daily_page_music'\n"
+	 param15="var management_page_url = '$management_page_url'"
 
-	all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10$param11$param12$param13$param14"
+	all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10$param11$param12$param13$param14$param15"
 	updatePage $dailyHtml new_params_start new_params_end "$all_params_str"
 	#----------------------------------------------------------------------
 
@@ -77,9 +78,10 @@ if [ $1 -eq 1 ];then
 		param7="var new_param6 = `getVal $mon_param6`\n" 
 		param8="var new_param7 = `getVal $mon_param7`\n" 
 		param9="var new_param8 = `getVal $mon_param8`\n" 
-		param10="var bg_music = '$mons_page_music'"
+		param10="var bg_music = '$mons_page_music'\n"
+		param11="var management_page_url = '$management_page_url'"
 		 
-		all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10"
+		all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10$param11"
 		
 		updatePage $monsHtml new_params_start new_params_end "$all_params_str"
 		#----------------------------------------------------------------------
@@ -95,9 +97,10 @@ if [ $1 -eq 1 ];then
 		param7="var new_param6 = `getVal $year_param6`\n" 
 		param8="var new_param7 = `getVal $year_param7`\n" 
 		param9="var new_param8 = `getVal $year_param8`\n" 
-		param10="var bg_music = '$years_page_music'"
+		param10="var bg_music = '$years_page_music'\n"
+		param11="var management_page_url = '$management_page_url'"
 		
-		all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10"
+		all_params_str="$param1$param2$param3$param4$param5$param6$param7$param8$param9$param10$param11"
 		
 		updatePage $yearsHtml new_params_start new_params_end "$all_params_str"	
 		#----------------------------------------------------------------------

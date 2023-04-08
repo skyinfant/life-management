@@ -153,24 +153,24 @@ cat > $file <<EOF
 
                         //1键打开本月汇总数据页面
                         if (code == 49) {
-                                window.open('https://www.tomorrowcat.com/monSum.html', '_blank');
+                                window.open('$management_page_url/monSum.html', '_blank');
                         } else
 
                        //3键打开汇总页面
                         if (code == 51) {
-                                window.open('https://www.tomorrowcat.com/sum.html', '_blank');
+                                window.open('$management_page_url/sum.html', '_blank');
                         } else
 
 
                        //4键打开最近24个月数据
                         if (code == 52) {
-                                window.open('https://www.tomorrowcat.com/mons.html', '_blank');
+                                window.open('$management_page_url/mons.html', '_blank');
                         } else
 
 
                        //5键打开历年数据
                         if (code == 53) {
-                                window.open('https://www.tomorrowcat.com/years.html', '_blank');
+                                window.open('$management_page_url/years.html', '_blank');
                         } else
 
 

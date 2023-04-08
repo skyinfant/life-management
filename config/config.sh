@@ -6,6 +6,9 @@
 #必须确保下面的参数全部存在数据库中才能开启，否则会报错
 mons_and_years_page_flag=1
 
+#各个页面的地址  
+management_page_url=https://www.test.com:8080
+
 
 #月度页面(mons.html)8个折线图的参数（必须以 mon_ 开头）
 mon_param1=mon_good_sleep_days

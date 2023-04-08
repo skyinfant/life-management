@@ -84,15 +84,16 @@
 
 //-------------------------new_params_start----------------------------------
 var new_year = 2023
-var new_param1 = 78
-var new_param2 = 63
-var new_param3 = 2998
-var new_param4 = 6
-var new_param5 = 3
-var new_param6 = 28
-var new_param7 = 20
-var new_param8 = 16
+var new_param1 = 0
+var new_param2 = 0
+var new_param3 = 0
+var new_param4 = 0
+var new_param5 = 0
+var new_param6 = 0
+var new_param7 = 0
+var new_param8 = 0
 var bg_music = '挪威的森林.mp3'
+var management_page_url = 'https://www.test.com:8080'
 //--------------------------new_params_end-----------------------------------
 
 //-------------------------params_start--------------------------------------
@@ -106,7 +107,7 @@ var arr6 = [new_param6]
 var arr7 = [new_param7]
 var arr8 = [new_param8]
 
-var param_name_arr = ['睡眠质量好的天数','能量值达到8以上天数','平均每日入账额','平均每日focus时间','完成任务日速度','读书天数','','弹吉他天数']
+var param_name_arr = ['睡眠质量好的天数','能量值达到8以上天数','平均每日入账额','平均每日focus时间','完成任务日速度','读书天数','运动天数','学英语天数']
 var color_arr = ['DarkViolet','DarkCyan','OliveDrab','Fuchsia','DarkViolet','DarkCyan','OliveDrab','Fuchsia']
 //-----------------------------params_end-----------------------------------
 
@@ -218,24 +219,24 @@ $("#bg_music").attr("src","./static/mp3/" + bg_music)
 
                                 //1键打开本月汇总数据页面
                                 if (code == 49) {
-                                        window.open('https://www.tomorrowcat.com/monSum.html', '_blank');
+                                        window.open(management_page_url + '/monSum.html', '_blank');
                                 } else
 
                                         //2键打开今年汇总数据页面
                                         if (code == 50) {
-                                                window.open('https://www.tomorrowcat.com/yearSum.html', '_blank');
+                                                window.open(management_page_url + '/yearSum.html', '_blank');
                                         } else
 
 
                                                 //3键打开汇总页面
                                                 if (code == 51) {
-                                                        window.open('https://www.tomorrowcat.com/sum.html', '_blank');
+                                                        window.open(management_page_url + '/sum.html', '_blank');
                                                 } else
 
 
                                                         //4键打开最近24个月数据
                                                         if (code == 52) {
-                                                                window.open('https://www.tomorrowcat.com/mons.html', '_blank');
+                                                                window.open(management_page_url + '/mons.html', '_blank');
                                                         } else
 
                                                         //其他任意键刷新页面
