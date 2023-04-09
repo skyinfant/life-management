@@ -529,6 +529,9 @@ if [ $key = 6 ];then
 
 			#标记为已进行系统初始化
 			changeFile $configFile is_init_system 2
+			
+			#清空日志
+			/usr/bin/rm -rf ./data/note/life/*
 
 			#干掉非核心参数
 			#start_row=`getRowNum $paramFile \#system_core_params 3`
