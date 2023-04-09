@@ -336,7 +336,9 @@ write_to_db()
 		#备份
 		suffix=`time_str`
 		cp $db_file ${db_file}_bak_$suffix
-		mv ${db_file}_bak_$suffix ./data/db/bak/
+		baseDir=./data/db/bak
+	    [ ! -d $baseDir ] && mkdir -p $baseDir
+		mv ${db_file}_bak_$suffix $baseDir
 
 	fi
 	
