@@ -33,8 +33,6 @@ read -n 1 -p "请输入你的选项(q退出)：" key
 
 #加参数
 if [ $key = 1 ];then
-
-	cd ./tool
 	
 	clear
 	echo -ne "\n\n添加方式  1--按块加(可批量)   2--按参数名加(可批量)："
@@ -96,22 +94,23 @@ if [ $key = 1 ];then
 								add_param=${add_param_arr[$param_index]}
 								#要添加的参数块中文名
 								des_add_param=${add_param_arr[$des_value_index]}
-
+							    cd ./tool
 								sh ./addOrDelParams.sh 1 1 "$a2" "$a3" $a4 "$add_param" "$des_add_param" "$a6"									
-								
+								cd ../
 							done
 
 							echo -ne "\n是否立即同步数据？y/n："
 							read -n 1 a8
 							if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]);then	
 								echo -e "\n\n正在同步......\n"
-								sh ./sync.sh										
+								cd ./tool
+								sh ./sync.sh	
+								cd ../								
 								echo -ne "\n同步完成，按任意键返回操作界面："
 								read -n 1 a9
 								
 							fi
 							
-							cd ../
 						
 						fi
 					
@@ -125,7 +124,7 @@ if [ $key = 1 ];then
 		
 		fi
 		
-	if [ `isNum "$a1"` ] && [ "$a1" = 2 ];then  #按参数名加
+	elif [ `isNum "$a1"` ] && [ "$a1" = 2 ];then  #按参数名加
 		echo -ne "\n\n用于定位的参数名称(英文)："
 		read a2
 		if [ "$a2" ] ;then	
@@ -150,20 +149,23 @@ if [ $key = 1 ];then
 					
 				if [ "$a4" ] ;then
 
-					echo -e "-----------------------------------------------\n"   			
+					echo -e "-----------------------------------------------\n"   
+					cd ./tool					
 					sh ./addOrDelParams.sh 1 2 "$a2" $a3 $a4
+					cd ../
 					
 					echo -ne "\n是否立即同步数据？y/n："
 					read -n 1 a8
 					if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
 						echo -e "\n\n正在同步......\n"
+						cd ./tool
 						sh ./sync.sh
+						cd ../
 						echo -ne "\n同步完成，按任意键返回操作界面："
 						read -n 1 a9
 						
 					fi
 					
-					cd ../
 				
 				fi					
 			
@@ -178,8 +180,6 @@ fi
 
 #删参数股
 if [ $key = 2 ];then
-
-	cd ./tool
 	
 	clear
 	echo -ne "\n\n删除方式  1--按块删(可批量)   2--按参数名删(可批量)："
@@ -191,20 +191,22 @@ if [ $key = 2 ];then
 		read a2
 		if [ "$a2" ];then
 		
-			echo -e "-----------------------------------------------\n"   			
+			echo -e "-----------------------------------------------\n"   
+			cd ./tool			
 			sh ./addOrDelParams.sh 2 1 $a2
+			cd ../
 			
 			echo -ne "\n是否立即同步数据？y/n："
 			read -n 1 a8
 			if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
 				echo -e "\n\n正在同步......\n"
+				cd ./tool
 				sh ./sync.sh
+				cd ../
 				echo -ne "\n同步完成，按任意键返回操作界面："
 				read -n 1 a9
 				
-			fi
-			
-			cd ../			
+			fi	
 		
 		fi
 
@@ -214,20 +216,23 @@ if [ $key = 2 ];then
 		read a2
 		if [ "$a2" ];then
 
-			echo -e "-----------------------------------------------\n"   			
+			echo -e "-----------------------------------------------\n"   	
+			cd ./tool			
 			sh ./addOrDelParams.sh 2 2 $a2
+			cd ../
 			
 			echo -ne "\n是否立即同步数据？y/n："
 			read -n 1 a8
 			if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
 				echo -e "\n\n正在同步......\n"
+				cd ./tool
 				sh ./sync.sh
+				cd ../
 				echo -ne "\n同步完成，按任意键返回操作界面："
 				read -n 1 a9
 				
 			fi
-			
-			cd ../		
+				
 
 		fi
 	fi
@@ -375,7 +380,7 @@ if [ $key = 3 ];then
 						echo -e "\n\n正在同步......\n"
 						cd ./tool
 						sh ./sync.sh
-						cd ..
+						cd ../
 						echo -ne "\n同步完成，按任意键返回操作界面："
 						read -n 1 a9
 						
@@ -419,73 +424,71 @@ if [ $key = 5 ];then
 	
 	echo -ne "\n\n1--设置新任务   2--暂停任务   3--开启任务   4--终止任务："
 	read b
+	if [ `isNum "$b"` ] && [ $b = 1 ];then
+		echo -ne "\n\n请输入新任务的名称："
+		read a1
+		if [ "$a1" ];then
+
+			echo -ne "\n\n请输入任务期限(天)："
+			read a2
+			if [ `isNum "$a2"` ];then
+			
+				echo -ne "\n\n请输入总任务数："
+				read a3
+				if [ `isNum "$a3"` ];then
+					
+					changeParams 2 task_state_A1
+					changeParams "'$a1'" task_name_A1
+					changeParams "$a2" task_deadline_days_A1
+					changeParams "$a3" total_task_num_A1
+					changeParams "$today2" task_start_day_A1
+					changeParams "`date -d "$a2 day" +%F`" task_end_day_A1
+					changeParams 0 today_task_num_A1		
+					changeParams 0 completed_task_num_A1
+					changeParams $a3 remaining_task_num_A1
+					changeParams 0 rate_task_completed_A1
+					changeParams 0 task_days_A1
+					changeParams $a2 remaining_task_days_A1
+					changeParams 0 ave_task_A1
+					
+					printSeparatorByDate 2 data/note/event.txt
+					echo -e "`now`     设置新任务：$a1     任务期限：$a2天\n\n" >> data/note/event.txt
+			
+					echo -e "\n新任务设置完成！\n"
+					
+					sleep 3
+				fi				
+
+			fi		
+		
+
+		fi	
+		
+	elif [ `isNum "$b"` ] && [ $b = 2 ];then
 	
-		if [ `isNum "$b"` ] && [ $b = 1 ];then
-			echo -ne "\n\n请输入新任务的名称："
-			read a1
-			if [ "$a1" ];then
-
-				echo -ne "\n\n请输入任务期限(天)："
-				read a2
-				if [ `isNum "$a2"` ];then
-				
-					echo -ne "\n\n请输入总任务数："
-					read a3
-					if [ `isNum "$a3"` ];then
-						
-						changeParams 2 task_state_A1
-						changeParams "'$a1'" task_name_A1
-						changeParams "$a2" task_deadline_days_A1
-						changeParams "$a3" total_task_num_A1
-						changeParams "$today2" task_start_day_A1
-						changeParams "`date -d "$a2 day" +%F`" task_end_day_A1
-						changeParams 0 today_task_num_A1		
-						changeParams 0 completed_task_num_A1
-						changeParams $a3 remaining_task_num_A1
-						changeParams 0 rate_task_completed_A1
-						changeParams 0 task_days_A1
-						changeParams $a2 remaining_task_days_A1
-						changeParams 0 ave_task_A1
-						
-						printSeparatorByDate 2 data/note/event.txt
-						echo -e "`now`     设置新任务：$a1     任务期限：$a2天\n\n" >> data/note/event.txt
-				
-						echo -e "\n新任务设置完成！\n"
-						
-						sleep 3
-					fi				
-
-				fi		
-			
-
-			fi	
-			
-		elif [ `isNum "$b"` ] && [ $b = 2 ];then
+		echo -ne "\n\n确定暂停任务【$task_name_A1】? y/n "
+		read c
+		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
+			changeParams 4 task_state_A1
+			ehco -e "\n\n任务【$task_name_A1】已暂停！"
+		fi
 		
-			echo -ne "\n\n确定暂停任务【$task_name_A1】? y/n "
-			read c
-			if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
-				changeParams 4 task_state_A1
-				ehco -e "\n\n任务【$task_name_A1】已暂停！"
-			fi
-			
-		elif [ `isNum "$b"` ] && [ $b = 3 ];then
+	elif [ `isNum "$b"` ] && [ $b = 3 ];then
 
-			changeParams 2 task_state_A1
-			ehco -e "\n\n任务【$task_name_A1】已开启！"		
-		
-		elif [ `isNum "$b"` ] && [ $b = 4 ];then
+		changeParams 2 task_state_A1
+		ehco -e "\n\n任务【$task_name_A1】已开启！"		
+	
+	elif [ `isNum "$b"` ] && [ $b = 4 ];then
 
-			echo -ne "\n\n确定终止任务【$task_name_A1】? y/n "
-			read c
-			if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
-				changeParams 5 task_state_A1
-				ehco -e "\n\n任务【$task_name_A1】已终止！"
-			fi
-			
+		echo -ne "\n\n确定终止任务【$task_name_A1】? y/n "
+		read c
+		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
+			changeParams 5 task_state_A1
+			ehco -e "\n\n任务【$task_name_A1】已终止！"
 		fi
 		
 	fi
+		
 
 fi
 

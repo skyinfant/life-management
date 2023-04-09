@@ -7,14 +7,13 @@ tput civis
 cd `dirname $0`
 source ./funcs.sh
 
-
 check_syste_is_init
 
 sleepText="\033[36;1m$mon_good_sleep_days\033[0m"
 [ $sleep_record_flag -eq 1 ] && sleepText="\033[46;30m $mon_good_sleep_days \033[0m"
 
 
-setColor1 33 1m 47 34m today_reading  today_sport  today_guitar today_english
+setColor1 33 1m 47 34m today_reading  today_sport today_english
 
 
 total_focus_time_str="$total_focus_time 小时"
@@ -36,12 +35,12 @@ text="All in management, then you'll find your real life."
 
 [ $task_state_A1 -eq 3 ] && text="恭喜，您已完成任务 【$task_name_A1】！再挑战新的任务吧！"
 
-[ $task_state_A1 -eq 1 ] && task_state_A1='未设置'
-[ $task_state_A1 -eq 2 ] && task_state_A1='进行中'
-[ $task_state_A1 -eq 3 ] && task_state_A1='已完成'
-[ $task_state_A1 -eq 4 ] && task_state_A1='已暂停'
-[ $task_state_A1 -eq 5 ] && task_state_A1='已终止'
-[ $task_state_A1 -eq 6 ] && task_state_A1='已逾期'
+[ $task_state_A1 = 1 ] && task_state_A1='未设置'
+[ $task_state_A1 = 2 ] && task_state_A1='进行中'
+[ $task_state_A1 = 3 ] && task_state_A1='已完成'
+[ $task_state_A1 = 4 ] && task_state_A1='已暂停'
+[ $task_state_A1 = 5 ] && task_state_A1='已终止'
+[ $task_state_A1 = 6 ] && task_state_A1='已逾期'
 #===================================================================================================
 clear
 echo -e "\n"
@@ -63,7 +62,7 @@ echo -e "  \033[1;33m今日入账：\033[0m\033[36;1m$today_income 元\033[0m   
 
 echo -e "----------------------------------------------------------------------------------------------------------------------------\n"
 
-echo -e "  \033[34;1m任务名称：\033[0m\033[32;1m$task_name_A1\033[0m                                          \033[34;1m任务状态：\033[0m\033[32;1m$task_state_A1\033[0m\n"
+echo -e "  \033[34;1m任务名称：\033[0m\033[32;1m$task_name_A1\033[0m                            \033[34;1m任务状态：\033[0m\033[32;1m$task_state_A1\033[0m\n"
 
 echo -e "  \033[34;1m任务开始时间：\033[0m\033[32;1m$task_start_day_A1\033[0m                       \033[34;1m任务结束时间：\033[0m\033[32;1m$task_end_day_A1\033[0m                       \033[34;1m剩余时间：\033[0m\033[32;1m$remaining_task_days_A1 天\033[0m\n"
 

@@ -818,6 +818,8 @@ setColor1() {
 
 		value=$(getVal $param)
 
+		[ ! "$value" ] && return 0
+
 		if [ $value = YES ]; then
 			eval $param=$(echo -e "\033[$c1\;$c2$value\033[0m")
 		else
@@ -837,6 +839,8 @@ setColor2() {
 		param=$(eval $gv)
 
 		value=$(getVal $param)
+
+		[ ! "$value" ] && return 0
 
 		if [ $value = YES ]; then
 
