@@ -534,9 +534,9 @@ if [ $key = 6 ];then
 					crondir='/var/spool/cron/'"$USER"
 					path="`pwd`"
 					
-					echo -e "\n\#初始化management" >> ${crondir}
+					echo -e "\n#初始化management" >> ${crondir}
 					echo "0 0 * * * sh $path/initParams.sh" >> ${crondir}
-					echo -e "\n\#计算" >> ${crondir}
+					echo -e "\n#计算" >> ${crondir}
 					echo "50 23 * * * sh $path/compute.sh" >> ${crondir}
 				fi
 			fi
