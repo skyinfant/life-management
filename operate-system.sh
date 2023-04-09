@@ -461,7 +461,7 @@ fi
 if [ $key = 6 ];then
 
 	clear
-	echo -ne "\n\n确定清空全部系统数据？y/n："
+	echo -ne "\n\n确定初始化系统并清空全部数据？y/n："
 	read a1
 	if [ "$a1" ] && [ "$a1" = y ];then
 	    if [ $current_version != 1.0 ];then
