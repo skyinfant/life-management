@@ -9,7 +9,7 @@ source ./funcs.sh
 #今天还没更新过睡眠质量的话不能操作
 exit_script2 sleep_record_flag 1
 #如果任务状态不是进行中则退出脚本
-[ $task_state_A1 -ne 2 ] && exit 1
+[ $task_state_A1 -ne 2 ] && showConsole && exit 1
 
 
 #计算收益
