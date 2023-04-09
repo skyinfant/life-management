@@ -9,6 +9,8 @@ baseDir=./data/note/life/$year
 #今天已经更新过睡眠质量的话不能再更新
 exit_script2 sleep_record_flag 2
 
+check_syste_is_init
+
 
 badSleep()
 {     

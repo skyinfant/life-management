@@ -4,6 +4,8 @@
 cd `dirname $0`
 source ./funcs.sh
 
+check_syste_is_init
+
 baseDir=./data/note/life/$year
 
 #今天已经更新过睡眠质量的话不能再更新

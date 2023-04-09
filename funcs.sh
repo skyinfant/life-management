@@ -1204,3 +1204,12 @@ backup_param_file()
 }
 
 
+#检查系统是否已初始化
+check_syste_is_init()
+{
+
+	[ $is_init_system -eq 1 ] && echo  -e "\n\n请先运行目录中的 operate-system.sh 进行系统初始化！\n\n" && exit 1
+
+}
+
+

@@ -3,6 +3,8 @@
 cd $(dirname $0)
 source ./funcs.sh
 
+check_syste_is_init
+
 start1=`tstamp_s`
 
 hour=`date "+%H"`

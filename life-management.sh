@@ -8,7 +8,7 @@ cd `dirname $0`
 source ./funcs.sh
 
 
-[ $is_init_system -eq 1 ] && echo  -e "\n\n请先运行目录中的 operate-system.sh 进行系统初始化！\n\n" && exit 1
+check_syste_is_init
 
 sleepText="\033[36;1m$mon_good_sleep_days\033[0m"
 [ $sleep_record_flag -eq 1 ] && sleepText="\033[46;30m $mon_good_sleep_days \033[0m"
