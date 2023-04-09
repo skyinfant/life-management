@@ -133,7 +133,7 @@ if [ $key = 1 ];then
 			read a3
 			if [ `isNum "$a3"` ] ;then
 			
-				echo -ne "\n\n要插入的参数，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
+				echo -ne "\n\n请输入要增加参数的英文名和中文名，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
 				read a4
 				
 				param_arr=(${a4// / })
@@ -464,27 +464,30 @@ if [ $key = 5 ];then
 
 		fi	
 		
-	elif [ `isNum "$b"` ] && [ $b = 2 ];then
+	elif [ `isNum "$b"` ] && [ $b = 2 ] && [ $task_state_A1 = 2 ];then
 	
 		echo -ne "\n\n确定暂停任务【$task_name_A1】? y/n "
 		read c
 		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
 			changeParams 4 task_state_A1
-			ehco -e "\n\n任务【$task_name_A1】已暂停！"
+			echo -e "\n\n任务【$task_name_A1】已暂停！"
+			sleep 3
 		fi
 		
-	elif [ `isNum "$b"` ] && [ $b = 3 ];then
+	elif [ `isNum "$b"` ] && [ $b = 3 ] && [ $task_state_A1 = 4 ];then
 
 		changeParams 2 task_state_A1
-		ehco -e "\n\n任务【$task_name_A1】已开启！"		
+		echo -e "\n\n任务【$task_name_A1】已开启！"	
+		sleep 3	
 	
-	elif [ `isNum "$b"` ] && [ $b = 4 ];then
+	elif [ `isNum "$b"` ] && [ $b = 4 ] && ([ $task_state_A1 = 2 ] || [ $task_state_A1 = 4 ] || [ $task_state_A1 = 6 ]);then
 
 		echo -ne "\n\n确定终止任务【$task_name_A1】? y/n "
 		read c
 		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
 			changeParams 5 task_state_A1
-			ehco -e "\n\n任务【$task_name_A1】已终止！"
+			echo -e "\n\n任务【$task_name_A1】已终止！"
+			sleep 3
 		fi
 		
 	fi

@@ -13,7 +13,7 @@ sleepText="\033[36;1m$mon_good_sleep_days\033[0m"
 [ $sleep_record_flag -eq 1 ] && sleepText="\033[46;30m $mon_good_sleep_days \033[0m"
 
 
-setColor1 33 1m 47 34m today_reading  today_sport today_english
+setColor1 33 1m 47 34m today_reading  today_sport today_english kk pp uu
 
 
 total_focus_time_str="$total_focus_time 小时"
@@ -62,7 +62,7 @@ echo -e "  \033[1;33m今日入账：\033[0m\033[36;1m$today_income 元\033[0m   
 
 echo -e "----------------------------------------------------------------------------------------------------------------------------\n"
 
-echo -e "  \033[34;1m任务名称：\033[0m\033[32;1m$task_name_A1\033[0m                            \033[34;1m任务状态：\033[0m\033[32;1m$task_state_A1\033[0m\n"
+echo -e "  \033[34;1m任务名称：\033[0m\033[32;1m$task_name_A1\033[0m                                     \033[34;1m任务状态：\033[0m\033[32;1m$task_state_A1\033[0m\n"
 
 echo -e "  \033[34;1m任务开始时间：\033[0m\033[32;1m$task_start_day_A1\033[0m                       \033[34;1m任务结束时间：\033[0m\033[32;1m$task_end_day_A1\033[0m                       \033[34;1m剩余时间：\033[0m\033[32;1m$remaining_task_days_A1 天\033[0m\n"
 
