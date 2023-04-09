@@ -328,8 +328,11 @@ task_deadline_days_A1=0
 des_task_start_day_A1='任务开始日期(A1)'
 task_start_day_A1=0
 
-des_task_end_day_A1='任务结束日期(A1)'
+des_task_end_day_A1='任务计划结束日期(A1)'
 task_end_day_A1=0
+
+des_task_state_A1='任务状态(A1) 1--未设置  2--进行中  3--已完成  4--已暂停  5--已终止  6--已逾期'
+task_state_A1=1
 
 
 des_total_task_num_A1='总任务数(A1)'
@@ -351,8 +354,8 @@ rate_task_completed_A1=0
 des_task_days_A1='任务已进行的天数(A1) 从0开始'
 task_days_A1=0
 
-des_remaining_task_days='任务期限剩余天数(A1)'
-remaining_task_days=0
+des_remaining_task_days_A1='任务期限剩余天数(A1)'
+remaining_task_days_A1=0
 
 des_ave_task_A1='任务速度(A1) 已完成任务数/已进行的天数'
 ave_task_A1=0
@@ -420,9 +423,6 @@ last_task_finish_timestamp=1680868458
 
 des_task_time_taken='两次完成任务之间的时间间隔，即是耗时(分钟)'
 task_time_taken=0
-
-des_task_is_stop='标记是否暂停任务 1--继续 2--暂停'
-task_is_stop=2
 #task-2============================================== 任务管理
 
 

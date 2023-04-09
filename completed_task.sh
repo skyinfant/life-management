@@ -1,5 +1,5 @@
 #!/bin/bash
-#完成一个任务
+#完成总任务数中的一个
 
 cd `dirname $0`
 
@@ -8,10 +8,8 @@ source ./funcs.sh
 
 #今天还没更新过睡眠质量的话不能操作
 exit_script2 sleep_record_flag 1
-
-#已停止任务统计的话则退出脚本
-exit_script2 task_is_stop 2
-
+#如果任务状态不是进行中则退出脚本
+[ $task_state_A1 -ne 2 ] && exit 1
 
 
 #计算收益
@@ -22,6 +20,9 @@ addOrSub +1 today_task_num_A1 completed_task_num_A1 mon_task_completed_num year_
 
 #剩余任务数-1
 addOrSub -1 remaining_task_num_A1
+
+#如果剩余任务为0，则把任务状态改为已完成   并且奖励5000金币
+[ $remaining_task_num_A1 -eq 0 ] && changeParams 3 task_state_A1 && compute_income +5000 completed_all_tasks
 
 
 #更新A1的速度
@@ -50,20 +51,20 @@ fi
 
 
 #修改最新的完成任务时间
-task_finish_time2=$(date "+%H:%M:%S")
-changeParams $task_finish_time2 task_finish_time
+#task_finish_time2=$(date "+%H:%M:%S")
+#changeParams $task_finish_time2 task_finish_time
 
 #当前时间戳   秒
-now=`tstamp_s`
+#now=`tstamp_s`
 
 #本次任务耗时   分
-let seconds=now-last_task_finish_timestamp
-task_time_taken2=`divide $seconds 60 0`
+#let seconds=now-last_task_finish_timestamp
+#task_time_taken2=`divide $seconds 60 0`
 
 #更新上次完成任务的时间戳
-changeParams $now last_task_finish_timestamp
+#changeParams $now last_task_finish_timestamp
 #更新任务耗时
-changeParams $task_time_taken2 task_time_taken
+#changeParams $task_time_taken2 task_time_taken
 
 
 

@@ -12,7 +12,8 @@ do
 clear
 
 cat <<list
-**************************************
+******************************************************
+
    1、增加参数
 
    2、删除参数
@@ -21,236 +22,233 @@ cat <<list
 
    4、同步数据
 
-   5、设置新任务
+   5、任务管理(设置新任务/暂停任务/开启任务/终止任务)
 
    6、初始化management系统 
-**************************************
+
+******************************************************
 list
 
 read -n 1 -p "请输入你的选项(q退出)：" key
 
+#加参数
 if [ $key = 1 ];then
 
 	cd ./tool
 	
 	clear
-	echo -ne "\n\n添加方式 1--按块加(可批量)   2--按参数名加(可批量)："
+	echo -ne "\n\n添加方式  1--按块加(可批量)   2--按参数名加(可批量)："
 	read a1
 	#按块加
-	if [ "$a1" ];then
-		if [ "$a1" = 1 ];then
-	
-			echo -ne "\n\n参数类型  1--按天数计   2--按次数计   3--普通参数(比如时间，数额等)："
-			read a2
-			if [ `isNum "$a2"` ];then
-			
-				echo -ne "\n\n用于定位的块名称(比如sport)，添加到参数文件最后的话就输入0："
-				read a3
-				if [ "$a3" ] ;then
-				    
-					if [ "$a3" != 0 ];then
-					
-						echo -ne "\n\n参数插入位置 2--放到块 $a3 前面   3--放到块 $a3 后面："
-						read a4	
-					
-					else
-						a4=1
-					fi
+	if [ `isNum "$a1"` ] && [ "$a1" = 1 ];then
 
-					if [ `isNum "$a4"` ] ;then
-					
-						echo -ne "\n\n要添加的参数块的英文名和中文名，一定要成对填，比如 sport 运动 reading 读书 play_game 玩游戏 : "
-						read a5
-
-						add_param_arr=(${a5// / })
-						len=${#add_param_arr[*]}
-						let ys=len%2
-						
-						if [ ! "$a5" ] || [ $ys -ne 0 ];then
-
-							echo -ne "\n\n请输入成对的块名称，比如 sport 运动 reading 读书 : "
-							read a5
-							add_param_arr=(${a5// / })
-							len=${#add_param_arr[*]}
-							
-						fi
-						
-						if [ "$a5" ] ;then
-						
-							echo -ne "\n\n参数模板 1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入0："
-							read a6
-							if [ `isNum "$a6"` ] ;then	
-
-								echo -e "-----------------------------------------------\n"	
-
-								let num=len/2
-
-								for ((i = 0; i < $num; i++)); do
-
-									let param_index=i*2
-									let des_value_index=i*2+1
-
-									#要添加的参数块英文名
-									add_param=${add_param_arr[$param_index]}
-									#要添加的参数块中文名
-									des_add_param=${add_param_arr[$des_value_index]}
-
-									sh ./addOrDelParams.sh 1 1 "$a2" "$a3" $a4 "$add_param" "$des_add_param" "$a6"									
-									
-								done
-
-								echo -ne "\n是否立即同步数据？y/n："
-								read -n 1 a8
-								if [ "$a8" ] && [ "$a8" = y ] ;then	
-								    echo -e "\n\n正在同步......\n"
-									sh ./sync.sh										
-									echo -ne "\n同步完成，按任意键返回操作界面："
-									read -n 1 a9
-									
-								fi
-								
-								cd ../
-							
-							fi
-						
-						
-						fi
-					
-					fi
+		echo -ne "\n\n参数类型  1--按天数计   2--按次数计   3--普通参数(比如时间，数额等)："
+		read a2
+		if [ `isNum "$a2"` ];then
+		
+			echo -ne "\n\n用于定位的块名称(比如sport)，添加到参数文件最后的话就输入0："
+			read a3
+			if [ "$a3" ] ;then
 				
+				if [ "$a3" != 0 ];then
+				
+					echo -ne "\n\n参数插入位置  2--放到块 $a3 前面   3--放到块 $a3 后面："
+					read a4	
+				
+				else
+					a4=1
 				fi
-			
-			
-			fi
-			
-		else  #按参数名加
-			echo -ne "\n\n用于定位的参数名称(英文)："
-			read a2
-			if [ "$a2" ] ;then	
-			
-				echo -ne "\n\n参数插入位置 1--放到定位参数 $a2 前   2--放到定位参数 $a2 后："
-				read a3
-				if [ `isNum "$a3"` ] ;then
+
+				if [ `isNum "$a4"` ] ;then
 				
-					echo -ne "\n\n要插入的参数，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
-					read a4
-					
-					param_arr=(${a4// / })
-					len=${#param_arr[*]}
+					echo -ne "\n\n要添加的参数块的英文名和中文名，一定要成对填，比如 sport 运动 reading 读书 play_game 玩游戏 : "
+					read a5
+
+					add_param_arr=(${a5// / })
+					len=${#add_param_arr[*]}
 					let ys=len%2
 					
-					if [ ! "$a4" ] || [ $ys -ne 0 ];then
+					if [ ! "$a5" ] || [ $ys -ne 0 ];then
 
-						echo -ne "\n\n请输入成对的参数名称，比如 sport 运动 shopping 购物 : "
-						read a4
+						echo -ne "\n\n请输入成对的块名称，比如 sport 运动 reading 读书 : "
+						read a5
+						add_param_arr=(${a5// / })
+						len=${#add_param_arr[*]}
 						
 					fi
-						
-					if [ "$a4" ] ;then
-
-						echo -e "-----------------------------------------------\n"   			
-						sh ./addOrDelParams.sh 1 2 "$a2" $a3 $a4
-						
-						echo -ne "\n是否立即同步数据？y/n："
-						read -n 1 a8
-						if [ "$a8" ] && [ "$a8" = y ] ;then	
-						    echo -e "\n\n正在同步......\n"
-							sh ./sync.sh
-							echo -ne "\n同步完成，按任意键返回操作界面："
-							read -n 1 a9
-							
-						fi
-						
-						cd ../
 					
-					fi					
-				
+					if [ "$a5" ] ;then
+					
+						echo -ne "\n\n参数模板  1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入0："
+						read a6
+						if [ "$a6" ] ;then	
+
+							echo -e "-----------------------------------------------\n"	
+
+							let num=len/2
+
+							for ((i = 0; i < $num; i++)); do
+
+								let param_index=i*2
+								let des_value_index=i*2+1
+
+								#要添加的参数块英文名
+								add_param=${add_param_arr[$param_index]}
+								#要添加的参数块中文名
+								des_add_param=${add_param_arr[$des_value_index]}
+
+								sh ./addOrDelParams.sh 1 1 "$a2" "$a3" $a4 "$add_param" "$des_add_param" "$a6"									
+								
+							done
+
+							echo -ne "\n是否立即同步数据？y/n："
+							read -n 1 a8
+							if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]);then	
+								echo -e "\n\n正在同步......\n"
+								sh ./sync.sh										
+								echo -ne "\n同步完成，按任意键返回操作界面："
+								read -n 1 a9
+								
+							fi
+							
+							cd ../
+						
+						fi
+					
+					
+					fi
 				
 				fi
-
+			
 			fi
+		
+		
 		fi
-	
+		
+	if [ `isNum "$a1"` ] && [ "$a1" = 2 ];then  #按参数名加
+		echo -ne "\n\n用于定位的参数名称(英文)："
+		read a2
+		if [ "$a2" ] ;then	
+		
+			echo -ne "\n\n参数插入位置  1--放到定位参数 $a2 前   2--放到定位参数 $a2 后："
+			read a3
+			if [ `isNum "$a3"` ] ;then
+			
+				echo -ne "\n\n要插入的参数，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
+				read a4
+				
+				param_arr=(${a4// / })
+				len=${#param_arr[*]}
+				let ys=len%2
+				
+				if [ ! "$a4" ] || [ $ys -ne 0 ];then
+
+					echo -ne "\n\n请输入成对的参数名称，比如 sport 运动 shopping 购物 : "
+					read a4
+					
+				fi
+					
+				if [ "$a4" ] ;then
+
+					echo -e "-----------------------------------------------\n"   			
+					sh ./addOrDelParams.sh 1 2 "$a2" $a3 $a4
+					
+					echo -ne "\n是否立即同步数据？y/n："
+					read -n 1 a8
+					if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+						echo -e "\n\n正在同步......\n"
+						sh ./sync.sh
+						echo -ne "\n同步完成，按任意键返回操作界面："
+						read -n 1 a9
+						
+					fi
+					
+					cd ../
+				
+				fi					
+			
+			
+			fi
+
+		fi
 	fi
-	
 
 fi
 
 
+#删参数股
 if [ $key = 2 ];then
 
 	cd ./tool
 	
 	clear
-	echo -ne "\n\n删除方式 1--按块删(可批量)   2--按参数名删(可批量)："
+	echo -ne "\n\n删除方式  1--按块删(可批量)   2--按参数名删(可批量)："
 	read a1
-	if [ "$a1" ];then
-		#按块删
-		if [ "$a1" = 1 ];then
-	
-			echo -ne "\n\n请输入要删除的块名称，多个的话以空格分隔："
-			read a2
-			if [ "$a2" ];then
-			
-				echo -e "-----------------------------------------------\n"   			
-				sh ./addOrDelParams.sh 2 1 $a2
-				
-				echo -ne "\n是否立即同步数据？y/n："
-				read -n 1 a8
-				if [ "$a8" ] && [ "$a8" = y ] ;then	
-				    echo -e "\n\n正在同步......\n"
-					sh ./sync.sh
-					echo -ne "\n同步完成，按任意键返回操作界面："
-					read -n 1 a9
-					
-				fi
-				
-				cd ../			
-			
-			fi
+	#按块删
+	if [ `isNum "$a1"` ] && [ "$a1" = 1 ];then
 
-		else #按参数名删
+		echo -ne "\n\n请输入要删除的块名称(英文)，多个的话以空格分隔："
+		read a2
+		if [ "$a2" ];then
 		
-			echo -ne "\n\n请输入要删除参数的英文名称，多个的话以空格分隔："
-			read a2
-			if [ "$a2" ];then
-
-				echo -e "-----------------------------------------------\n"   			
-				sh ./addOrDelParams.sh 2 2 $a2
+			echo -e "-----------------------------------------------\n"   			
+			sh ./addOrDelParams.sh 2 1 $a2
+			
+			echo -ne "\n是否立即同步数据？y/n："
+			read -n 1 a8
+			if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+				echo -e "\n\n正在同步......\n"
+				sh ./sync.sh
+				echo -ne "\n同步完成，按任意键返回操作界面："
+				read -n 1 a9
 				
-				echo -ne "\n是否立即同步数据？y/n："
-				read -n 1 a8
-				if [ "$a8" ] && [ "$a8" = y ] ;then	
-				    echo -e "\n\n正在同步......\n"
-					sh ./sync.sh
-					echo -ne "\n同步完成，按任意键返回操作界面："
-					read -n 1 a9
-					
-				fi
-				
-				cd ../		
-
 			fi
+			
+			cd ../			
+		
 		fi
+
+	elif [ `isNum "$a1"` ] && [ "$a1" = 2 ];then #按参数名删
 	
+		echo -ne "\n\n请输入要删除参数的英文名称，多个的话以空格分隔："
+		read a2
+		if [ "$a2" ];then
+
+			echo -e "-----------------------------------------------\n"   			
+			sh ./addOrDelParams.sh 2 2 $a2
+			
+			echo -ne "\n是否立即同步数据？y/n："
+			read -n 1 a8
+			if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+				echo -e "\n\n正在同步......\n"
+				sh ./sync.sh
+				echo -ne "\n同步完成，按任意键返回操作界面："
+				read -n 1 a9
+				
+			fi
+			
+			cd ../		
+
+		fi
 	fi
 
 fi
 
 
+#调整参数块的位置
 if [ $key = 3 ];then
     clear
-	echo -ne "\n\n请输入要调整位置的参数块名称："
+	echo -ne "\n\n请输入要调整位置的参数块名称(英文)："
 	read a1
 	if [ "$a1" ];then
 	
-		echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，调整到参数文件最后的话就输入0："
+		echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，如果调整到参数文件最后的话就输入0："
 		read a2
 		if [ "$a2" ];then
 		
 			if [ "$a2" != 0 ];then
 				
-				echo -ne "\n\n调整位置 1--把参数块 $a1 调到 $a2 之前   2--把参数块 $a1 调到 $a2 之后："
+				echo -ne "\n\n调整位置  1--把参数块 $a1 调到 $a2 之前   2--把参数块 $a1 调到 $a2 之后："
 				read a3
 				
 			else
@@ -373,7 +371,7 @@ if [ $key = 3 ];then
 					
 					echo -ne "\n调整完成，是否立即同步数据？y/n："
 					read -n 1 a8
-					if [ "$a8" ] && [ "$a8" = y ] ;then	
+					if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
 						echo -e "\n\n正在同步......\n"
 						cd ./tool
 						sh ./sync.sh
@@ -401,6 +399,7 @@ if [ $key = 3 ];then
 fi
 
 
+#同步数据
 if [ $key = 4 ];then
 	clear
 	echo -e '\n\n正在同步......'
@@ -414,56 +413,90 @@ if [ $key = 4 ];then
 fi
 
 
+#任务管理
 if [ $key = 5 ];then
 	clear
-	echo -ne "\n\n请输入任务名称："
-	read a1
-	if [ "$a1" ];then
-
-		echo -ne "\n\n请输入任务期限(天)："
-		read a2
-		if [ `isNum "$a2"` ];then
-		
-			echo -ne "\n\n请输入总任务数："
-			read a3
-			if [ `isNum "$a3"` ];then
-				
-				changeParams 1 task_is_stop
-				changeParams "'$a1'" task_name_A1
-				changeParams "$a2" task_deadline_days_A1
-				changeParams "$a3" total_task_num_A1
-				changeParams "$today2" task_start_day_A1
-				changeParams "`date -d "$a2 day" +%F`" task_end_day_A1
-				changeParams 0 today_task_num_A1		
-                changeParams 0 completed_task_num_A1
-				changeParams $a3 remaining_task_num_A1
-				changeParams 0 rate_task_completed_A1
-				changeParams 0 task_days_A1
-				changeParams $a2 remaining_task_days
-				changeParams 0 ave_task_A1
-				
-				printSeparatorByDate 2 data/note/event.txt
-				echo -e "`now`     设置新任务：$a1     任务期限：$a2天\n\n" >> data/note/event.txt
-		
-				echo -e "\n新任务设置完成！\n"
-				
-				sleep 3
-			fi				
-
-		fi		
 	
+	echo -ne "\n\n1--设置新任务   2--暂停任务   3--开启任务   4--终止任务："
+	read b
+	
+		if [ `isNum "$b"` ] && [ $b = 1 ];then
+			echo -ne "\n\n请输入新任务的名称："
+			read a1
+			if [ "$a1" ];then
 
-	fi	
+				echo -ne "\n\n请输入任务期限(天)："
+				read a2
+				if [ `isNum "$a2"` ];then
+				
+					echo -ne "\n\n请输入总任务数："
+					read a3
+					if [ `isNum "$a3"` ];then
+						
+						changeParams 2 task_state_A1
+						changeParams "'$a1'" task_name_A1
+						changeParams "$a2" task_deadline_days_A1
+						changeParams "$a3" total_task_num_A1
+						changeParams "$today2" task_start_day_A1
+						changeParams "`date -d "$a2 day" +%F`" task_end_day_A1
+						changeParams 0 today_task_num_A1		
+						changeParams 0 completed_task_num_A1
+						changeParams $a3 remaining_task_num_A1
+						changeParams 0 rate_task_completed_A1
+						changeParams 0 task_days_A1
+						changeParams $a2 remaining_task_days_A1
+						changeParams 0 ave_task_A1
+						
+						printSeparatorByDate 2 data/note/event.txt
+						echo -e "`now`     设置新任务：$a1     任务期限：$a2天\n\n" >> data/note/event.txt
+				
+						echo -e "\n新任务设置完成！\n"
+						
+						sleep 3
+					fi				
+
+				fi		
+			
+
+			fi	
+			
+		elif [ `isNum "$b"` ] && [ $b = 2 ];then
+		
+			echo -ne "\n\n确定暂停任务【$task_name_A1】? y/n "
+			read c
+			if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
+				changeParams 4 task_state_A1
+				ehco -e "\n\n任务【$task_name_A1】已暂停！"
+			fi
+			
+		elif [ `isNum "$b"` ] && [ $b = 3 ];then
+
+			changeParams 2 task_state_A1
+			ehco -e "\n\n任务【$task_name_A1】已开启！"		
+		
+		elif [ `isNum "$b"` ] && [ $b = 4 ];then
+
+			echo -ne "\n\n确定终止任务【$task_name_A1】? y/n "
+			read c
+			if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
+				changeParams 5 task_state_A1
+				ehco -e "\n\n任务【$task_name_A1】已终止！"
+			fi
+			
+		fi
+		
+	fi
 
 fi
 
 
+#初始化系统
 if [ $key = 6 ];then
 
 	clear
 	echo -ne "\n\n确定初始化系统并清空全部数据？y/n："
 	read a1
-	if [ "$a1" ] && [ "$a1" = y ];then
+	if [ "$a1" ] && ([ "$a1" = y ] || [ "$a1" = Y ]);then
 	    if [ $current_version != 1.0 ];then
 			echo -ne "\n\n请输入密钥(在config.sh中)："
 			read a2
@@ -495,7 +528,6 @@ if [ $key = 6 ];then
 			#start_row=`getRowNum $paramFile \#system_core_params 3`
 			#let start_row=start_row+3
 			#row_count=`getRowCount $paramFile`
-			
 			#[ $row_count -ge $start_row ] && sed -i "$start_row,$row_count d" $paramFile
 			
 			#升级版本
@@ -530,7 +562,7 @@ if [ $key = 6 ];then
 			changeParams 1 sleep_record_flag high_energy_days_count_flag high_income_days_count_flag high_focus_days_count_flag high_task_days_count_flag
 			changeParams 1000000 my_asset_target asset_gap
 			changeParams OUT focus_on_out
-			changeParams 2 task_is_stop
+			changeParams 1 task_state_A1			                
 			
 			
 			
@@ -541,7 +573,6 @@ if [ $key = 6 ];then
 			day_of_year=`date +%j`
 			[[ "$day_of_year" = 0* ]] && day_of_year=`echo "$day_of_year" | cut -c 2-`
 			changeParams $day_of_year day_of_year
-			
 			
 			#今天日期  2023.1.1
 			today11=$(echo `date +%Y.%m.%d` | awk -F"." '{printf("%d.%d.%d\n",$1,$2,$3)}')
@@ -597,6 +628,7 @@ done
 
 
 showConsole
+
 
 
 

@@ -71,8 +71,8 @@ init_rate_ave 14369721 $day $mon_day
 
 
 #=========================================================================== 任务管理
-#通过停止标志控制是否继续统计
-if [ $task_is_stop -eq 1 ]; then
+#通过任务状态标志控制是否继续统计
+if [ $task_state_A1 -eq 2 ]; then
 
 	#任务已进行天数+1
 	addOrSub +1 task_days_A1
@@ -81,7 +81,10 @@ if [ $task_is_stop -eq 1 ]; then
 	ave 0 completed_task_num_A1 task_days_A1 ave_task_A1
 
 	#剩余天数-1
-	addOrSub -1 remaining_task_days
+	addOrSub -1 remaining_task_days_A1
+
+	#如果剩余天数小于等于0但是剩余任务数大于0，则把任务状态标记为逾期
+	[ $remaining_task_days_A1 -le 0 ] && [ $remaining_task_num_A1 -gt 0 ] && changeParams 6 task_state_A1
 
 
 fi
