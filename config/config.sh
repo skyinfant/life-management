@@ -6,7 +6,7 @@
 #必须确保下面的参数全部存在于数据库中才能开启，否则会报错
 mons_and_years_page_flag=1
 
-#各个页面的地址  
+#各个页面的地址（结尾不要带斜杠/）
 management_page_url=https://www.test.com:8080
 
 

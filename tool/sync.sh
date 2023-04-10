@@ -68,7 +68,7 @@ for row in $(seq $system_row $row_count); do
 
     fi
 
-  if ([[ "$row_str" = total_* ]] || [[ "$row_str" = rate_total_* ]] || [[ "$row_str" = ave_total_* ]]) && [[ "$row_str" != *_to_year* ]] && [[ "$row_str" != *_A1 ]];then
+  if ([[ "$row_str" = total_* ]] || [[ "$row_str" = rate_total_* ]] || [[ "$row_str" = ave_total_* ]]) && [[ "$row_str" != *_A1 ]];then
 
         param=`echo $row_str | cut -d '=' -f 1`
         total_params="$total_params,$param"

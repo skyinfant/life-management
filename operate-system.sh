@@ -527,17 +527,18 @@ if [ $key = 6 ];then
 			#关闭页面开关
 			#changeFile $configFile mons_and_years_page_flag 2
 
-			if [ $is_init_system = 1 ];then
-				echo -ne "\n\n是否将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务？y/n："
+			crondir='/var/spool/cron/'"$USER"
+			path="`pwd`"
+			checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
+			if [ ! "$checkCron" ];then
+				echo -ne "是否将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务？y/n："
 				read b
 				if [ "$b" ] && ([ "$b" = y ] || [ "$b" = Y ]);then
-					crondir='/var/spool/cron/'"$USER"
-					path="`pwd`"
-					
-					echo -e "\n#初始化management" >> ${crondir}
-					echo "0 0 * * * sh $path/initParams.sh" >> ${crondir}
-					echo -e "\n#计算" >> ${crondir}
+					echo -e "\n#life-management统计定时任务" >> ${crondir}
 					echo "50 23 * * * sh $path/compute.sh" >> ${crondir}
+					echo -e "#life-management初始化定时任务" >> ${crondir}
+					echo "0 0 * * * sh $path/initParams.sh" >> ${crondir}
+
 				fi
 			fi
 			
@@ -546,6 +547,14 @@ if [ $key = 6 ];then
 			
 			#清空日志
 			/usr/bin/rm -rf ./data/note/life/*
+			
+			#创建mp3文件夹
+			musicDir=./html/static/mp3
+			[ ! -d $musicDir ] && mkdir -p $musicDir
+		
+			#创建日志文件夹
+			logDir=./data/logs
+			[ ! -d $logDir ] && mkdir -p $logDir
 
 			#干掉非核心参数
 			#start_row=`getRowNum $paramFile \#system_core_params 3`

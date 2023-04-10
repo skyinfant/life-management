@@ -79,7 +79,7 @@ year_good_sleep_days=0
 des_total_good_sleep_days='总计睡眠质量好的天数'
 total_good_sleep_days=0
 
-des_total_good_sleep_days_to_year='总天数折合为年 总睡眠质量好的天数/365'
+des_total_good_sleep_days_to_year='good sleep天数折合为年'
 total_good_sleep_days_to_year=0
 
 des_rate_mon_good_sleep_days='本月睡眠质量好的比例'
@@ -442,7 +442,7 @@ year_sport_days=0
 des_total_sport_days='总计运动天数'
 total_sport_days=0
 
-des_total_sport_days_to_year='总运动天数折合为年 总天数/365'
+des_total_sport_days_to_year='总运动天数折合为年'
 total_sport_days_to_year=0
 
 
@@ -470,7 +470,7 @@ year_reading_days=0
 des_total_reading_days='总计读书天数'
 total_reading_days=0
 
-des_total_reading_days_to_year='总读书天数折合为年 总天数/365'
+des_total_reading_days_to_year='总读书天数折合为年'
 total_reading_days_to_year=0
 
 
