@@ -16,7 +16,7 @@ monsData='./data/db/monsData.db'
 #年度数据文件
 yearsData='./data/db/yearsData.db'
 
-dailyHtml=./html/management.html
+dailyHtml=./html/index.html
 monsHtml=./html/mons.html
 yearsHtml=./html/years.html
 

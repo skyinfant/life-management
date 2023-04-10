@@ -67,7 +67,7 @@ line_chart_color8=Fuchsia
 
 
 
-#每日页面(management.html)、月度页面(mons.html)、年度页面(years.html)、本月页面(monSum.html)、今年页面(yearSum.html)、汇总页面(sum.html)的背景音乐
+#每日页面(index.html)、月度页面(mons.html)、年度页面(years.html)、本月页面(monSum.html)、今年页面(yearSum.html)、汇总页面(sum.html)的背景音乐
 #这些背景音乐必须存在于 html/static/mp3 这个文件夹中，才能正常播放。在对应页面按Enter播放，再按一次暂停
 #每日页面
 daily_page_music="亲爱的旅人.mp3"
