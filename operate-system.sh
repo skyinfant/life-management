@@ -529,7 +529,7 @@ if [ $key = 6 ];then
 
 			crondir='/var/spool/cron/'"$USER"
 			path="`pwd`"
-			checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
+			[ -e $crondir ] && checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
 			if [ ! "$checkCron" ];then
 				echo -ne "是否将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务？y/n："
 				read b
