@@ -8,7 +8,7 @@
 
 
 github地址：<https://github.com/skyinfant/life-management>     
-csdn：<https://editor.csdn.net/md/?articleId=130071056>     
+csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>     
 实例演示：<http://47.108.253.93/>
 
 
