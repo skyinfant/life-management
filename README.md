@@ -164,7 +164,7 @@ expires 1s;
 3. 推荐使用`secureCRT`作为linux连接工具，因为它可以把常用命令设置成按钮，只要点一下按钮就可以执行脚本了。           
 secureCRT8.5绿色版网盘链接：https://pan.baidu.com/s/1RbId4G1yWVGY1l49du9fGA?pwd=1234 
 
-secureCrt安装好后在顶栏右键，勾上这2个选项，可以显示command window和按钮栏
+压缩包中有安装方法。secureCrt安装好后在顶栏右键，勾上这2个选项，可以显示command window和按钮栏
 
 ![](doc/2.png)
 
