@@ -9,7 +9,7 @@
 
 github地址：<https://github.com/skyinfant/life-management>     
 csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>     
-实例演示(按数字键1、2、3、4、5会跳转到其他5个页面)：<http://47.108.253.93/>
+实例演示：<http://47.108.253.93/>         (按数字键1、2、3、4、5会跳转到其他5个页面)
 
 
 🙏🏻 大家喜欢这个项目的话，感谢动手点点 star。
