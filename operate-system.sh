@@ -44,7 +44,7 @@ if [ $key = 1 ];then
 		read a2
 		if [ `isNum "$a2"` ];then
 		
-			echo -ne "\n\n用于定位的块名称(比如sport)，添加到参数文件最后的话就输入0："
+			echo -ne "\n\n用于定位的块名称(比如sport)，添加到参数文件最后的话就输入 0 ："
 			read a3
 			if [ "$a3" ] ;then
 				
@@ -77,7 +77,7 @@ if [ $key = 1 ];then
 					
 					if [ "$a5" ] ;then
 					
-						echo -ne "\n\n参数模板  1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入0："
+						echo -ne "\n\n参数模板  1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入 0 ："
 						read a6
 						if [ "$a6" ] ;then	
 
@@ -247,7 +247,7 @@ if [ $key = 3 ];then
 	read a1
 	if [ "$a1" ];then
 	
-		echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，如果调整到参数文件最后的话就输入0："
+		echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，如果调整到参数文件最后的话就输入 0 ："
 		read a2
 		if [ "$a2" ];then
 		
