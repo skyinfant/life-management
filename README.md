@@ -9,7 +9,7 @@
 
 github地址：<https://github.com/skyinfant/life-management>     
 csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>     
-实例演示：<http://47.108.253.93/>
+实例演示(按数字键1、2、3、4、5会跳转到其他5个页面)：<http://47.108.253.93/>
 
 
 🙏🏻 大家喜欢这个项目的话，感谢动手点点 star。
@@ -37,11 +37,11 @@ csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>
 ### 多页面展示
 ```
 1. 每日页面(index.html)：展示最近30天的数据
-2. 当月页面(monSum.html)：展示当月的汇总数据（在其他页面按1键即可跳转）
-3. 当年页面(yearSum.html)：展示当年的汇总数据（在其他页面按2键即可跳转）
-4. 汇总页面(sum.html)：展示全部汇总数据   （在其他页面按3键即可跳转）
-5. 月度页面(mons.html)：展示最近24个月的数据 （在其他页面按4键即可跳转）
-6. 年度页面(years.html)：展示历年数据 （在其他页面按5键即可跳转）
+2. 当月页面(monSum.html)：展示当月的汇总数据（在其他页面按数字键1即可跳转）
+3. 当年页面(yearSum.html)：展示当年的汇总数据（在其他页面按数字键2即可跳转）
+4. 汇总页面(sum.html)：展示全部汇总数据   （在其他页面按数字键3即可跳转）
+5. 月度页面(mons.html)：展示最近24个月的数据 （在其他页面按数字键4即可跳转）
+6. 年度页面(years.html)：展示历年数据 （在其他页面按数字键5即可跳转）
    
    在每个页面按Enter键播放背景音乐，再按一次暂停
    要使用这些页面，需要先配置nginx和 config/config.sh 这个文件
