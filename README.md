@@ -74,7 +74,7 @@ csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>
 
 ### funcs.sh
 ```
-存放项目用到的自定义方法
+存放项目用到的自定义
 ```
 
 ###  config/config.sh
