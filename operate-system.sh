@@ -487,6 +487,10 @@ if [ $key = 5 ];then
 		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
 			changeParams 5 task_state_A1
 			echo -e "\n\n任务【$task_name_A1】已终止！"
+
+            printSeparatorByDate 2 data/note/event.txt
+            echo -e "`now`     终止任务：$task_name_A1\n\n" >> data/note/event.txt
+
 			sleep 3
 		fi
 		

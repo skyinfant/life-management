@@ -86,6 +86,9 @@ if [ $task_state_A1 -eq 2 ]; then
 	#如果剩余天数小于等于0但是剩余任务数大于0，则把任务状态标记为逾期
 	[ $remaining_task_days_A1 -le 0 ] && [ $remaining_task_num_A1 -gt 0 ] && changeParams 6 task_state_A1
 
+	printSeparatorByDate 2 data/note/event.txt
+	echo -e "`now`     任务【$task_name_A1】已逾期\n\n" >> data/note/event.txt
+
 
 fi
 #=========================================================================== 任务管理
