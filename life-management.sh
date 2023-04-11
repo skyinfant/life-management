@@ -1,13 +1,13 @@
 #!/bin/bash
 #从2021年2月12日开始统计 
 
-#隐藏光标
-tput civis
-
 cd `dirname $0`
 source ./funcs.sh
 
 check_syste_is_init
+
+#隐藏光标
+tput civis
 
 sleepText="\033[36;1m$mon_good_sleep_days\033[0m"
 [ $sleep_record_flag -eq 1 ] && sleepText="\033[46;30m $mon_good_sleep_days \033[0m"
