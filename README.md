@@ -126,7 +126,7 @@ csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>
 ![](doc/1.png)
 
 5. 配置nginx:   
-本文使用docker来部署nginx，当然采用其他方式也是没问题的。
+本文使用docker来部署nginx，当然采用其他方式也是没问题的。             
 docker安装nginx：https://cloud.tencent.com/developer/article/2015581         
 注意，一定要把nginx容器的html目录，挂载到本项目的html目录，比如我的项目放在`/root/test` 下，
 所以我的创建容器命令为 :
