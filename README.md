@@ -111,6 +111,11 @@ csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>
 存放报表文件
 ```
 
+### data/note/income_flow/
+```
+存放收益流水文件。所谓收益，就是在做各种操作时的分数奖励或惩罚
+```
+
 ## 快速部署
 
 1. 在linux主机上 `git clone git@github.com:skyinfant/life-management.git`    把项目拉下来，或者直接下载项目压缩包解压
