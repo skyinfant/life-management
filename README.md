@@ -7,7 +7,7 @@
 
 
 ## 项目简介
-本项目包含db、报表、页面，虽然是个小项目，但麻雀虽小，五脏俱全，支持任务管理、学习管理、生活记录等功能，可灵活扩展，快速部署。为了降低系统的复杂性，所以只采用了shell+html+nginx实现，不包含任何的mysql，springboot，tomcat等花里胡哨的东西(其实是俺不懂~)
+本项目包含db、报表、页面，虽然是个小项目，但麻雀虽小，五脏俱全，支持任务管理、学习管理、生活记录等功能，可灵活扩展，快速部署。为了降低系统的复杂性，所以只采用了shell+html+nginx实现，不包含任何的mysql，springboot，tomcat等花里胡哨的东西(其实是因为懒~)
 
 
 github地址：<https://github.com/skyinfant/life-management>     
