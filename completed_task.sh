@@ -22,10 +22,15 @@ addOrSub +1 today_task_num_A1 completed_task_num_A1 mon_task_completed_num year_
 addOrSub -1 remaining_task_num_A1
 
 #如果剩余任务为0，则把任务状态改为已完成   并且奖励5000金币
-[ $remaining_task_num_A1 -eq 0 ] && changeParams 3 task_state_A1 && compute_income +5000 completed_all_tasks
+if [ $remaining_task_num_A1 -eq 0 ];then
 
-printSeparatorByDate 2 data/note/event.txt
-echo -e "`now`     完成任务：$task_name_A1\n\n" >> data/note/event.txt
+	changeParams 3 task_state_A1
+	compute_income +5000 completed_all_tasks
+
+	printSeparatorByDate 2 data/note/event.txt	
+	echo -e "`now`     完成任务：$task_name_A1\n\n" >> data/note/event.txt
+
+fi
 
 
 #更新A1的速度

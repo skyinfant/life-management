@@ -76,9 +76,12 @@ if [ $key = 1 ];then
 					fi
 					
 					if [ "$a5" ] ;then
-					
-						echo -ne "\n\n参数模板  1--百分比   2--平均值   3--high，可以填多个，以空格分隔，使用默认模板就输入 0 ："
+
+						[ "$a2" = 1 ] && tip_str="\n\n参数模板  1--百分比   2--平均值  可以选1个或两个，以空格分隔，使用默认模板就输入 0 ："					
+						[ "$a2" = 2 ] || [ "$a2" = 3 ] && tip_str="\n\n参数模板  2--平均值   3--high，可以选1个或两个，以空格分隔，使用默认模板就输入 0 ："					
+						echo -ne "$tip_str"
 						read a6
+
 						if [ "$a6" ] ;then	
 
 							echo -e "-----------------------------------------------\n"	
@@ -482,7 +485,7 @@ if [ $key = 5 ];then
 	
 	elif [ `isNum "$b"` ] && [ $b = 4 ] && ([ $task_state_A1 = 2 ] || [ $task_state_A1 = 4 ] || [ $task_state_A1 = 6 ]);then
 
-		echo -ne "\n\n确定终止任务【$task_name_A1】? y/n "
+		echo -ne "\n\n确定终止任务【$task_name_A1】? 终止后将不可恢复！ y/n "
 		read c
 		if [ "$c" ] && ([ "$c" = y ] || [ "$c" = Y ]);then
 			changeParams 5 task_state_A1
