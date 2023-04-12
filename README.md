@@ -126,7 +126,7 @@ csdn：<https://blog.csdn.net/jerry_kim123/article/details/130071056>
 ![](doc/1.png)
 
 5. 配置nginx:   
-本文使用docker来部署nginx。
+本文使用docker来部署nginx，当然采用其他方式也是没问题的。
 docker安装nginx：https://cloud.tencent.com/developer/article/2015581         
 注意，一定要把nginx容器的html目录，挂载到本项目的html目录，比如我的项目放在`/root/test` 下，
 所以我的创建容器命令为 :
@@ -138,7 +138,8 @@ docker run -p 80:80 --name management \
 -v /root/test/nginx/conf/conf.d:/etc/nginx/conf.d \
 -v /root/test/nginx/log:/var/log/nginx \
 -v /root/test/life-management/html:/usr/share/nginx/html \
--d nginx:latest
+-d nginx:latest \
+--restart=aways
 ```
 nginx安装好后，编辑映射到宿主机的default.conf（我的位置是 `/root/test/nginx/conf/conf.d/default.conf`），这个是nginx的配置文件，在设置主页的地方加入这2行代码，以避免页面缓存：
 
