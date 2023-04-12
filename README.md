@@ -133,13 +133,12 @@ docker安装nginx：https://cloud.tencent.com/developer/article/2015581
 
 
 ```
-docker run -p 80:80 --name management \
+docker run -p 80:80 --restart=always --name management \
 -v /root/test/nginx/conf/nginx.conf:/etc/nginx/nginx.conf \
 -v /root/test/nginx/conf/conf.d:/etc/nginx/conf.d \
 -v /root/test/nginx/log:/var/log/nginx \
 -v /root/test/life-management/html:/usr/share/nginx/html \
--d nginx:latest \
---restart=aways
+-d nginx:latest
 ```
 nginx安装好后，编辑映射到宿主机的default.conf（我的位置是 `/root/test/nginx/conf/conf.d/default.conf`），这个是nginx的配置文件，在设置主页的地方加入这2行代码，以避免页面缓存：
 
