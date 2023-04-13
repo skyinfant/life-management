@@ -39,6 +39,10 @@ then
 	init_rate_ave 1	
 
 
+	#保存数据，加载页面
+	sh ./saveDataAndLoadPage.sh 1
+
+
     #生成报表
     sh ./generateMonStatement.sh
     sh ./generateYearStatement.sh
@@ -57,7 +61,5 @@ then
 fi
 
 
-#保存数据，加载页面
-sh ./saveDataAndLoadPage.sh 1
 
 
