@@ -1217,3 +1217,17 @@ check_syste_is_init()
 }
 
 
+#清除某个字符串中的某些子串   clearStrs "11 22 33 44 55" 22 33 44 ---> 11 55
+clearStrs()
+{
+    originStr="$1"
+    for item in $(seq 2 $#); do
+        clearStr=$(eval $gv)
+        originStr=`echo "$originStr" | sed "s/$clearStr//g"`
+
+    done
+
+    echo $originStr
+}
+
+
