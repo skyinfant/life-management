@@ -59,6 +59,7 @@ cat > $file <<EOF
 
 <br><br>
 <p>睡眠质量好的天数：$total_good_sleep_days</p>
+<p>good sleep天数折合为年：$total_good_sleep_days_to_year</p>
 <p>睡眠质量好的比例：$rate_total_good_sleep_days</p>
 <p>平均每月睡眠质量好的天数：$ave_total_mon_good_sleep_days</p>
 <p>平均每年睡眠质量好的天数：$ave_total_year_good_sleep_days</p>
@@ -105,11 +106,13 @@ cat > $file <<EOF
 
 
 <p>运动天数：$total_sport_days</p>
+<p>总运动天数折合为年：$total_sport_days_to_year</p>
 <p>运动比例：$rate_total_sport_days</p>
 <br><br>
 
 
 <p>读书天数：$total_reading_days</p>
+<p>总读书天数折合为年：$total_reading_days_to_year</p>
 <p>读书比例：$rate_total_reading_days</p>
 <br><br>
 
