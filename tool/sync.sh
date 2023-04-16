@@ -246,8 +246,16 @@ for ((i = 0; i < $len_all_params_db; i++)); do
     
 		del_params="$del_params  $param1"
 
-		check=`cat ./config/config.sh | grep -w $param1`
-		[ "$check" ] && del_page_params="$del_page_params  $param1"
+		check=`cat $configFile | grep -w $param1`
+		if [ "$check" ];then
+			del_page_params="$del_page_params  $param1"
+			sed -i "s/$param1//g" $configFile
+
+		fi
+
+		#从操作面板中删除
+		ls | grep 'operate-' | grep -v 'system' | xargs sed -i "s/\$$param1//g"
+		ls | grep 'operate-' | grep -v 'system' | xargs sed -i "s/$param1//g"
 
 	fi
 
@@ -264,9 +272,11 @@ if [ "$del_params" ];then
 	sh ./tool/update_version.sh "从db删除$del_params_len个参数：$del_params"
    	echo -e "从db删除$del_params_len个参数：$del_params"
 
-	[ "$del_page_params" ] && echo -e "\033[1;39m\n页面参数 $del_page_params 已经从db删除，无法再将其加载到页面，请修改配置文件 config.sh ！\033[0m" 
-	#关闭页面开关
-	[ "$del_page_params" ] && changeFile $configFile mons_and_years_page_flag 2
+	if [ "$del_page_params" ];then
+		echo -e "\033[1;39m\n页面参数 $del_page_params 已经从db删除，无法再将其加载到页面，请修改配置文件 config.sh ！\033[0m" 
+		#关闭页面开关
+		changeFile $configFile mons_and_years_page_flag 2
+	fi
 
 	bak_flag=2
 else
