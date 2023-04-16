@@ -164,7 +164,7 @@ expires 1s;
 1. `sh goodSleep.sh` 用于记录好的睡眠状况，`sh badSleep.sh`用于记录不好的睡眠状况，每日要先记录睡眠状况才能进行其他操作(根治熬夜顽疾~)
 2. `sh focus_on_out.sh` 用于开启/关闭专注模式，再运行一次则退出专注模式
 3. `sh completed_task.sh` 用于记录完成了1个任务，总任务量会减1
-4. `sh operate-1.sh` 日常操作面板，可进行运动，读书等情况的记录，如果自己想扩充操作选项，只需要 `sh operate-system.sh`,在系统操作面板中增加参数(即是字段)，然后把自己的参数加入`operate-1.sh` 中的操作选项即可，代码十分简单，一看就懂。如果选项很多，那就复制多几个 `operate-2.sh`、`operate-3.sh`
+4. `sh operate-1.sh` 日常操作面板，可进行运动，读书等情况的记录，如果自己想扩充操作选项，只需要 `sh operate-system.sh`,在系统操作面板中增加参数(即是字段)，然后把自己的参数加入`operate-1.sh` 中的操作选项即可，代码十分简单，一看就懂。如果选项很多，那就复制多几个 `operate-2.sh`、`operate-3.sh`（命名一定要以operate- 开头！）
 
 
 ## 贴心服务
