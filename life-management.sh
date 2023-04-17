@@ -13,9 +13,6 @@ sleepText="\033[36;1m$mon_good_sleep_days\033[0m"
 [ $sleep_record_flag -eq 1 ] && sleepText="\033[46;30m $mon_good_sleep_days \033[0m"
 
 
-setColor1 33 1m 47 34m today_reading  today_sport today_english kk pp uu
-
-
 total_focus_time_str="$total_focus_time 小时"
 [ `compare $total_focus_time '<' 1` ] && total_focus_time_str="`mul $total_focus_time 60 0` 分钟"
 
