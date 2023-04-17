@@ -523,7 +523,7 @@ if [ $key = 6 ];then
             path="`pwd`"
             [ -e $crondir ] && checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
             if [ ! "$checkCron" ];then
-                echo -ne "是否允许将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务，否则无法正常运行？y/n："
+                echo -ne "\n是否允许将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务，否则无法正常运行？y/n："
                 read b
                 if [ "$b" ] && ([ "$b" = y ] || [ "$b" = Y ]);then
                     echo -e "\n#life-management统计定时任务" >> ${crondir}
