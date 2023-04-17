@@ -518,6 +518,21 @@ if [ $key = 6 ];then
 		fi
 		
 		if [ "$a2" ] && [ "$a2" = $init_system_secret ];then	
+
+            crondir='/var/spool/cron/'"$USER"
+            path="`pwd`"
+            [ -e $crondir ] && checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
+            if [ ! "$checkCron" ];then
+                echo -ne "是否允许将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务，否则无法正常运行？y/n："
+                read b
+                if [ "$b" ] && ([ "$b" = y ] || [ "$b" = Y ]);then
+                    echo -e "\n#life-management统计定时任务" >> ${crondir}
+                    echo "50 23 * * * sh $path/compute.sh" >> ${crondir}
+                    echo -e "#life-management初始化定时任务" >> ${crondir}
+                    echo "0 0 * * * sh $path/initParams.sh" >> ${crondir}
+
+                fi
+            fi
 		
 			echo -e "\n正在初始化......\n"
 		
@@ -534,21 +549,6 @@ if [ $key = 6 ];then
 			#关闭页面开关
 			#changeFile $configFile mons_and_years_page_flag 2
 
-			crondir='/var/spool/cron/'"$USER"
-			path="`pwd`"
-			[ -e $crondir ] && checkCron=`getRowNum $crondir "$path\/initParams.sh" 1`
-			if [ ! "$checkCron" ];then
-				echo -ne "是否将定时任务加入crontab，本系统需要每日晚上进行两次定时统计任务？y/n："
-				read b
-				if [ "$b" ] && ([ "$b" = y ] || [ "$b" = Y ]);then
-					echo -e "\n#life-management统计定时任务" >> ${crondir}
-					echo "50 23 * * * sh $path/compute.sh" >> ${crondir}
-					echo -e "#life-management初始化定时任务" >> ${crondir}
-					echo "0 0 * * * sh $path/initParams.sh" >> ${crondir}
-
-				fi
-			fi
-			
 			#标记为已进行系统初始化
 			changeFile $configFile is_init_system 2
 			

@@ -281,6 +281,7 @@ for ((i = 0; i < $len_all_params_db; i++)); do
 		ls | grep 'operate-' | grep -v 'system' | xargs sed -i "s/\$$param1//g"
 		ls | grep 'operate-' | grep -v 'system' | xargs sed -i "s/$param1//g"
         #从主界面删除
+        sed -i "s/\$$param1//g" ./life-management.sh
         sed -i "s/$param1//g" ./life-management.sh
 
 	fi
