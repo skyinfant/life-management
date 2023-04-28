@@ -432,30 +432,30 @@ if [ $key = 5 ];then
 		read a1
 		if [ "$a1" ];then
 
-			echo -ne "\n\n请输入任务期限(天)："
+			echo -ne "\n\n请输入总任务数："
 			read a2
 			if [ `isNum "$a2"` ];then
 			
-				echo -ne "\n\n请输入总任务数："
+				echo -ne "\n\n请输入任务期限(天)："
 				read a3
 				if [ `isNum "$a3"` ];then
 					
 					changeParams 2 task_state_A1
 					changeParams "'$a1'" task_name_A1
-					changeParams "$a2" task_deadline_days_A1
-					changeParams "$a3" total_task_num_A1
+					changeParams "$a3" task_deadline_days_A1
+					changeParams "$a2" total_task_num_A1
 					changeParams "$today2" task_start_day_A1
-					changeParams "`date -d "$a2 day" +%F`" task_end_day_A1
+					changeParams "`date -d "$a3 day" +%F`" task_end_day_A1
 					changeParams 0 today_task_num_A1		
 					changeParams 0 completed_task_num_A1
-					changeParams $a3 remaining_task_num_A1
+					changeParams $a2 remaining_task_num_A1
 					changeParams 0 rate_task_completed_A1
 					changeParams 0 task_days_A1
-					changeParams $a2 remaining_task_days_A1
+					changeParams $a3 remaining_task_days_A1
 					changeParams 0 ave_task_A1
 					
 					printSeparatorByDate 2 data/note/event.txt
-					echo -e "`now`     设置新任务：$a1     任务期限：$a2天\n\n" >> data/note/event.txt
+					echo -e "`now`     设置新任务：$a1     总任务数：$a2个     任务期限：$a3天\n\n" >> data/note/event.txt
 			
 					echo -e "\n新任务设置完成！\n"
 					
