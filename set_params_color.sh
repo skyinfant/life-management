@@ -1,8 +1,0 @@
-#!/bin/bash
-source ./funcs.sh
-
-setColor2 today_good_sleep today_sport today_reading today_english today_study_times today_play_game_times
-
-setColor3 1 36m mon_good_sleep_days mon_sport_days mon_reading_days mon_english_days mon_study_times mon_play_game_times year_good_sleep_days year_sport_days year_reading_days year_english_days year_study_times year_play_game_times
-
-setColor3 1 33m today_income mon_income year_income

@@ -19,10 +19,6 @@ years_params=''
 years_params2=''
 total_params=''
 
-today_set_color_params=''
-mon_set_color_params=''
-year_set_color_params=''
-
 flag=1
 
 system_row=`getRowNum $paramFile "\#system-2" 3`
@@ -50,7 +46,6 @@ for row in $(seq $system_row $row_count); do
 
         param=`echo $row_str | cut -d '=' -f 1`
         daily_params="$daily_params,$param"
-		today_set_color_params="$today_set_color_params $param"
 		continue
 
     fi
@@ -61,7 +56,6 @@ for row in $(seq $system_row $row_count); do
 		param=`echo $row_str | cut -d '=' -f 1`
 		mons_params="$mons_params,$param"
 		mons_params2="$mons_params2,$param"
-		[[ "$row_str" = mon_* ]] && mon_set_color_params="$mon_set_color_params $param"
 		continue
 
 	fi
@@ -71,7 +65,6 @@ for row in $(seq $system_row $row_count); do
         param=`echo $row_str | cut -d '=' -f 1`
         years_params="$years_params,$param"
         years_params2="$years_params2,$param"
-		[[ "$row_str" = year_* ]] && year_set_color_params="$year_set_color_params $param"
 		continue
 
     fi
@@ -92,22 +85,6 @@ mons_params2="mon$mons_params2"
 years_params=`echo "$years_params" | cut -d ',' -f 2- | sed 's/0,0/0/g'`
 years_params2="year$years_params2"
 total_params=`echo "$total_params" | cut -d ',' -f 2- | sed 's/0,0/0/g'`
-
-
-
-today_set_color_params=`clearStrs "$today_set_color_params" today_income today_energy today_focus_time today_task_num_A1`
-
-year_mon_set_color_params="$mon_set_color_params$year_set_color_params"
-
-year_mon_set_color_params=`clearStrs "$year_mon_set_color_params" mon_income year_income \
-mon_bad_sleep_days mon_energy mon_high_energy_days mon_low_energy_days  mon_high_income_days \
-mon_focus_time mon_high_focus_days mon_task_completed_num mon_high_task_days \
-year_bad_sleep_days year_energy year_high_energy_days \
-year_low_energy_days  year_high_income_days year_focus_time year_high_focus_days \
-year_task_completed_num year_high_task_days`
-
-set_color_strs="#!/bin/bash\nsource ./funcs.sh\n\nsetColor2 $today_set_color_params\n\nsetColor3 1 36m $year_mon_set_color_params\n\nsetColor3 1 33m today_income mon_income year_income"
-echo -e "$set_color_strs" > ./set_params_color.sh
 
 
 writeToStatement()
