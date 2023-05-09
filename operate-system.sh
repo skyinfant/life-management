@@ -128,14 +128,16 @@ if [ $key = 1 ];then
 		fi
 		
 	elif [ `isNum "$a1"` ] && [ "$a1" = 2 ];then  #按参数名加
-		echo -ne "\n\n用于定位的参数名称(英文)："
-		read a2
-		if [ "$a2" ] ;then	
-		
-			echo -ne "\n\n参数插入位置  1--放到定位参数 $a2 前   2--放到定位参数 $a2 后："
-			read a3
-			if [ `isNum "$a3"` ] ;then
-			
+        echo -ne "\n\n请输入用于定位的参数英文名称(添加到该参数之前或之后)："
+        read a2
+        if [ "$a2" ] ;then
+            if [[ $a2 = des_* ]];then
+                a3=1
+            else
+                a3=2
+            fi
+
+            if [ 1 ] ;then			
 				echo -ne "\n\n请输入要增加参数的英文名和中文名，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
 				read a4
 				
