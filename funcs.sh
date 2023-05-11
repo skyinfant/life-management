@@ -1251,7 +1251,7 @@ db_count()
         symbol=$2
         compareNum=$3
         condition=$4
-        des_param="`getVal des_$1`"
+	    des_param="`getVal des_$1 | sed 's/今日//g'`"
         str=''
         [ $condition ] && str="$condition    "
     count1=0
