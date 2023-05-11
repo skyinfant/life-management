@@ -18,7 +18,7 @@ cat <<list
 
    2、删除参数
    
-   3、调整参数块的位置
+   3、调整参数位置
 
    4、同步数据
 
@@ -136,43 +136,39 @@ if [ $key = 1 ];then
             else
                 a3=2
             fi
+		
+			echo -ne "\n\n请输入要增加参数的英文名和中文名，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
+			read a4
+			
+			param_arr=(${a4// / })
+			len=${#param_arr[*]}
+			let ys=len%2
+			
+			if [ ! "$a4" ] || [ $ys -ne 0 ];then
 
-            if [ 1 ] ;then			
-				echo -ne "\n\n请输入要增加参数的英文名和中文名，可以填多对，可以带默认值，也可以不带\n比如：today_sport 运动 mon_shop_times=20 本月购物次数 year_movie_times 今年看电影次数 : "
+				echo -ne "\n\n请输入成对的参数名称，比如 sport 运动 shopping 购物 : "
 				read a4
 				
-				param_arr=(${a4// / })
-				len=${#param_arr[*]}
-				let ys=len%2
+			fi
 				
-				if [ ! "$a4" ] || [ $ys -ne 0 ];then
+			if [ "$a4" ] ;then
 
-					echo -ne "\n\n请输入成对的参数名称，比如 sport 运动 shopping 购物 : "
-					read a4
-					
-				fi
-					
-				if [ "$a4" ] ;then
-
-					echo -e "-----------------------------------------------\n"   
-					cd ./tool					
-					sh ./addOrDelParams.sh 1 2 "$a2" $a3 $a4
+				echo -e "-----------------------------------------------\n"   
+				cd ./tool					
+				sh ./addOrDelParams.sh 1 2 "$a2" $a3 $a4
+				cd ../
+				
+				echo -ne "\n是否立即同步数据？y/n："
+				read -n 1 a8
+				if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+					echo -e "\n\n正在同步......\n"
+					cd ./tool
+					sh ./sync.sh
 					cd ../
+					echo -ne "\n同步完成，按任意键返回操作界面："
+					read -n 1 a9
 					
-					echo -ne "\n是否立即同步数据？y/n："
-					read -n 1 a8
-					if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
-						echo -e "\n\n正在同步......\n"
-						cd ./tool
-						sh ./sync.sh
-						cd ../
-						echo -ne "\n同步完成，按任意键返回操作界面："
-						read -n 1 a9
-						
-					fi
-					
-				
-				fi					
+				fi			
 			
 			
 			fi
@@ -183,7 +179,7 @@ if [ $key = 1 ];then
 fi
 
 
-#删参数股
+#删参数
 if [ $key = 2 ];then
 	
 	clear
@@ -245,168 +241,424 @@ if [ $key = 2 ];then
 fi
 
 
-#调整参数块的位置
+#调整参数位置
 if [ $key = 3 ];then
     clear
-	echo -ne "\n\n请输入要调整位置的参数块名称(英文)："
-	read a1
-	if [ "$a1" ];then
+	echo -ne "\n\n1--调整参数块的位置   2--调整参数的位置："
+	read b
 	
-		echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，如果调整到参数文件最后的话就输入 0 ："
-		read a2
-		if [ "$a2" ];then
+	#调整参数块的位置
+	if [ $b ] && [ $b = 1 ];then
+		echo -ne "\n\n请输入要调整位置的参数块名称(英文)："
+		read a1
+		if [ "$a1" ];then
 		
-			if [ "$a2" != 0 ];then
-				
-				echo -ne "\n\n调整位置  1--把参数块 $a1 调到 $a2 之前   2--把参数块 $a1 调到 $a2 之后："
-				read a3
-				
-			else
-				
-				a3=3
-					
-			fi
+			echo -ne "\n\n请输入用于定位的参数块名称(调整到该块之前或之后)，如果调整到参数文件最后的话就输入 0 ："
+			read a2
+			if [ "$a2" ];then
 			
-            if [ `isNum "$a3"` ];then
-                flag=1
-				core_row=`getRowNum $paramFile "\#system_core_params" 3`
-				row_count=`getRowCount $paramFile`
-				
-				#要调整的参数块位置
-				row1=`getRowNum $paramFile "\#$a1-1" 3`
-				row2=`getRowNum $paramFile "\#$a1-2" 3`
-				
-				#定位块位置
-				row3=`getRowNum $paramFile "\#$a2-1" 3`
-				row4=`getRowNum $paramFile "\#$a2-2" 3`
-				
-				[ ! "$row1" ] || [ ! "$row2" ] && echo  -e "\n参数块 $a1 不存在！" && flag=2
-				[ "$a2" != 0 ] && ([ ! "$row3" ] || [ ! "$row4" ]) && echo -e "\n参数块 $a2 不存在！" && flag=2
-				[ "$row1" ] && [ $row1 -le $core_row ] && echo -e "\n不允许调整核心参数块 $a1 的位置！" && flag=2
-
-				if [ $flag = 1 ];then
-
-					backup_param_file
+				if [ "$a2" != 0 ];then
 					
-					let n1=row1-1
-					let n2=row1-2
-					let n3=row2+1
-					let n4=row2+2
-					check1=`getRow $paramFile $n1 | trim`
-					check2=`getRow $paramFile $n2 | trim`
-					check3=`getRow $paramFile $n3 | trim`
-					check4=`getRow $paramFile $n4 | trim`
+					echo -ne "\n\n调整位置  1--把参数块 $a1 调到 $a2 之前   2--把参数块 $a1 调到 $a2 之后："
+					read a3
 					
-					if [ "$a3" = 1 ];then
-						
-						if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
-							
-							let row2=row2+2
-							
-						fi
-						
-						row_str=`sed -n "$row1,$row2 p" $paramFile`	
-						#sed -n会自动忽略最后面的空行的，所以要加2个空行
-						row_str="$row_str\n\n"
-                        echo -e "$row_str" > temp.txt
-							
-						sed -i "$row1,$row2 d" $paramFile
-
-						row3=`getRowNum $paramFile "\#$a2-1" 3`
-						let row3=row3-1
-
-						sed -i "$row3 r temp.txt" $paramFile
-
-						/usr/bin/rm -rf  temp.txt 
-						
-					
-					elif [ "$a3" = 2 ];then
-					
-						if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
-						
-							let row1=row1-2
-							row_str=`sed -n "$row1,$row2 p" $paramFile`	
-							
-						else
-						
-							row_str=`sed -n "$row1,$row2 p" $paramFile`	
-							row_str="\\\n\n$row_str"
-							
-						fi
-					
-						echo -e "$row_str" > temp.txt
-	
-						sed -i "$row1,$row2 d" $paramFile
-
-						row4=`getRowNum $paramFile "\#$a2-2" 3`
-						
-						sed -i "$row4 r temp.txt" $paramFile					
-				
-						/usr/bin/rm -rf  temp.txt	
-						
-					elif [ "$a3" = 3 ];then
-
-						if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
-						
-							let row1=row1-2
-							row_str=`sed -n "$row1,$row2 p" $paramFile`	
-							
-						else
-						
-							row_str=`sed -n "$row1,$row2 p" $paramFile`	
-							row_str="\\\n\n$row_str"
-							
-						fi
-					
-						echo -e "$row_str" > temp.txt
-	
-						sed -i "$row1,$row2 d" $paramFile
-
-						a=`getRowCount $paramFile`
-						let b=a-1
-						let c=a-2
-						row1=`getRow $paramFile $b`
-						row2=`getRow $paramFile $c`
-						
-						row_end=$a
-						[[ "$row1" = \#* ]] && row_end=$b
-						[[ "$row2" = \#* ]] && row_end=$c
-						
-						sed -i "$row_end r temp.txt" $paramFile					
-				
-						/usr/bin/rm -rf  temp.txt					
-					
-					fi
-					
-					
-					echo -ne "\n调整完成，是否立即同步数据？y/n："
-					read -n 1 a8
-					if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
-						echo -e "\n\n正在同步......\n"
-						cd ./tool
-						sh ./sync.sh
-						cd ../
-						echo -ne "\n同步完成，按任意键返回操作界面："
-						read -n 1 a9
-						
-					fi
-
 				else
+					
+					a3=3
+						
+				fi
+				
+				if [ `isNum "$a3"` ];then
+					flag=1
+					core_row=`getRowNum $paramFile "\#system_core_params" 3`
+					row_count=`getRowCount $paramFile`
+					
+					#要调整的参数块位置
+					row1=`getRowNum $paramFile "\#$a1-1" 3`
+					row2=`getRowNum $paramFile "\#$a1-2" 3`
+					
+					#定位块位置
+					row3=`getRowNum $paramFile "\#$a2-1" 3`
+					row4=`getRowNum $paramFile "\#$a2-2" 3`
+					
+					[ ! "$row1" ] || [ ! "$row2" ] && echo  -e "\n参数块 $a1 不存在！" && flag=2
+					[ "$a2" != 0 ] && ([ ! "$row3" ] || [ ! "$row4" ]) && echo -e "\n参数块 $a2 不存在！" && flag=2
+					[ "$row1" ] && [ $row1 -le $core_row ] && echo -e "\n不允许调整核心参数块 $a1 的位置！" && flag=2
 
-				    echo -ne "\n按任意键返回操作界面："
-					read -n 1 a9	
+					if [ $flag = 1 ];then
+
+						backup_param_file
+						
+						let n1=row1-1
+						let n2=row1-2
+						let n3=row2+1
+						let n4=row2+2
+						check1=`getRow $paramFile $n1 | trim`
+						check2=`getRow $paramFile $n2 | trim`
+						check3=`getRow $paramFile $n3 | trim`
+						check4=`getRow $paramFile $n4 | trim`
+						
+						if [ "$a3" = 1 ];then
+							
+							if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
+								
+								let row2=row2+2
+								
+							fi
+							
+							row_str=`sed -n "$row1,$row2 p" $paramFile`	
+							#sed -n会自动忽略最后面的空行的，所以要加2个空行
+							row_str="$row_str\n\n"
+							echo -e "$row_str" > temp.txt
+								
+							sed -i "$row1,$row2 d" $paramFile
+
+							row3=`getRowNum $paramFile "\#$a2-1" 3`
+							let row3=row3-1
+
+							sed -i "$row3 r temp.txt" $paramFile
+
+							/usr/bin/rm -rf  temp.txt 
+							
+						
+						elif [ "$a3" = 2 ];then
+						
+							if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
+							
+								let row1=row1-2
+								row_str=`sed -n "$row1,$row2 p" $paramFile`	
+								
+							else
+							
+								row_str=`sed -n "$row1,$row2 p" $paramFile`	
+								row_str="\\\n\n$row_str"
+								
+							fi
+						
+							echo -e "$row_str" > temp.txt
+		
+							sed -i "$row1,$row2 d" $paramFile
+
+							row4=`getRowNum $paramFile "\#$a2-2" 3`
+							
+							sed -i "$row4 r temp.txt" $paramFile					
+					
+							/usr/bin/rm -rf  temp.txt	
+							
+						elif [ "$a3" = 3 ];then
+
+							if [ $n3 -le $row_count ] && [ $n4 -le $row_count ] && [ ! "$check1" ] && [ ! "$check2" ] && [ ! "$check3" ] && [ ! "$check4" ];then
+							
+								let row1=row1-2
+								row_str=`sed -n "$row1,$row2 p" $paramFile`	
+								
+							else
+							
+								row_str=`sed -n "$row1,$row2 p" $paramFile`	
+								row_str="\\\n\n$row_str"
+								
+							fi
+						
+							echo -e "$row_str" > temp.txt
+		
+							sed -i "$row1,$row2 d" $paramFile
+
+							a=`getRowCount $paramFile`
+							let b=a-1
+							let c=a-2
+							row1=`getRow $paramFile $b`
+							row2=`getRow $paramFile $c`
+							
+							row_end=$a
+							[[ "$row1" = \#* ]] && row_end=$b
+							[[ "$row2" = \#* ]] && row_end=$c
+							
+							sed -i "$row_end r temp.txt" $paramFile					
+					
+							/usr/bin/rm -rf  temp.txt					
+						
+						fi
+						
+						
+						echo -ne "\n调整完成，是否立即同步数据？y/n："
+						read -n 1 a8
+						if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+							echo -e "\n\n正在同步......\n"
+							cd ./tool
+							sh ./sync.sh
+							cd ../
+							echo -ne "\n同步完成，按任意键返回操作界面："
+							read -n 1 a9
+							
+						fi
+
+					else
+
+						echo -ne "\n按任意键返回操作界面："
+						read -n 1 a9	
+					
+					fi
+				
+				
+				fi		
+			
+			fi	
+		
+		fi
+	
+	#调整参数的位置
+	elif [ $b ] && [ $b = 2 ];then
+		echo -ne "\n\n请输入要调整位置的参数名称(英文),可填多个，必须是同一个块的，以空格分隔，不要填描述参数："
+		read a1
+		if [ "$a1" ];then	
+
+			echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本块最前面   2--调整到本块最后面："
+			read a2
+			
+			if [ "$a2" ];then
+				if [ ! `isNum $a2` ];then
+					if [ ! `getRowNum $paramFile $a2 3` ];then 
+						echo -e "\n定位参数 $a2 不存在！"
+						
+						echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本块最前面   2--调整到本块最后面："
+						read a2							
+						
+					fi
+				fi
+
+				if [ ! `isNum $a2` ];then
+					#有定位参数
+					echo -ne "\n\n调整位置  1--把参数 "$a1" 调到 $a2 之前   2--把参数块 "$a1" 调到 $a2 之后："
+					read a3	
+					
+					flag2=1
+					[ $a3 ] && [ $a3 = 1 ] && [[ $a2 != des_* ]] && echo -e "\n$a2 不是描述参数，不能移动到非描述参数之前！" && flag2=2 
+					[ $a3 ] && [ $a3 = 2 ] && [[ $a2 = des_* ]] && echo -e "\n$a2 是描述参数，不能移动到描述参数之后！" && flag2=2 
+					
+					if [ $flag2 = 2 ];then
+						echo -ne "\n\n调整位置  1--把参数 "$a1" 调到 $a2 之前   2--把参数块 "$a1" 调到 $a2 之后："
+						read a3							
+					fi
+				else
+					#无定位参数
+					a3=25
+				fi
+				
+				if [ `isNum "$a3"` ];then
+					arr=(${a1// / })
+					len=${#arr[*]i}
+					
+					#要移动的参数所在的块的前分隔行行号
+					param_block_1=''	
+
+					#无定位参数
+					if [ $a3 = 25 ];then
+
+						temp=''
+						head_param=''
+						for ((i = 0; i < $len; i++)); do
+							param=${arr[$i]}
+							
+							#参数行位置
+							row_num1=`getRowNum $paramFile $param 3`
+							
+							[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
+							
+							[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
+						
+							if [ $param_block_1 ];then
+								[ `getPositionOfBlock $param 1` != $param_block_1 ] && echo -e "\n参数 $param 与 $head_param 不是处于同一个块！" && continue
+								temp="$temp $param"
+							else
+							
+								param_block_1=`getPositionOfBlock $param 1`
+								
+								temp=$param
+								head_param=$param
+							
+							fi							
+
+						done	
+						
+						a1=$temp
+					
+					fi
+					
+					
+
+					arr=(${a1// / })
+					len=${#arr[*]i}
+					
+					param_list=''
+					move_str=''						
+					for ((i = 0; i < $len; i++)); do
+
+						param=${arr[$i]}
+						
+						#参数行位置
+						row_num1=`getRowNum $paramFile $param 3`
+						
+						[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
+						
+						[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
+						
+						if [ $a3 -ne 25 ];then   #有定位参数
+							#定位参数的块位置				
+							block_start1=`getPositionOfBlock $a2 1`
+							block_start2=`getPositionOfBlock $param 1`					
+							[ $block_start1 != $block_start2 ] && echo -e "\n参数 $param 与定位参数 $a2 不是处于同一个块！" && continue							
+							
+						fi
+	
+						
+						#去重
+						[ "`echo $param_list | grep -w $param`" ] && continue
+						[ $a2 = $param ] && continue
+						param_list="$param_list $param"
+						
+						#参数行内容
+						p_row_str=`getRow $paramFile $row_num1 | trim`
+						#描述行位置
+						let des_row=row_num1-1
+						#描述行内容
+						des_row_str=`getRow $paramFile $des_row | trim`
+						
+						[ "$move_str" ] && move_str="$move_str\n\n$des_row_str\n$p_row_str"
+						[ ! "$move_str" ] && move_str="$des_row_str\n$p_row_str"
+						
+						
+						row_count=`getRowCount $paramFile`
+						
+						#描述行上一行
+						let a=row_num1-2
+						row1=`getRow $paramFile $a | trim`
+									
+						#描述行上2行
+						let b=row_num1-3
+						row2=`getRow $paramFile $b | trim`
+						
+						#参数行下一行
+						let c=row_num1+1
+						row3=`getRow $paramFile $c | trim`
+						
+						#参数行下2行
+						let d=row_num1+2
+						row4=`getRow $paramFile $d | trim`
+						
+						#描述行上一行是分隔行
+						if [[ "$row1" = *=====* ]];then
+							sed -i "$des_row d" $paramFile
+							sed -i "$des_row d" $paramFile
+
+							[ $c -le $row_count ] && [ ! "$row3" ] && sed -i "$des_row d" $paramFile
+							[ $d -le $row_count ] && [ ! "$row3" ] && [ ! "$row4" ] && sed -i "$des_row d" $paramFile
+							
+							continue
+						
+						fi
+						
+						#参数行下一行是分隔行
+						if [[ "$row3" = *=====* ]];then
+							sed -i "$des_row d" $paramFile
+							sed -i "$des_row d" $paramFile
+							
+							[ ! "$row1" ] && sed -i "$a d" $paramFile
+							[ ! "$row1" ] && [ ! "$row2" ] && sed -i "$b d" $paramFile
+							
+							continue
+							
+						
+						fi
+						
+						#描述行之上有2行空行
+						if [ ! "$row1" ] && [ ! "$row2" ];then
+							sed -i "$des_row d" $paramFile
+							sed -i "$des_row d" $paramFile
+
+							[ $c -le $row_count ] && [ ! "$row3" ] && sed -i "$des_row d" $paramFile
+							[ $d -le $row_count ] && [ ! "$row3" ] && [ ! "$row4" ] && sed -i "$des_row d" $paramFile
+							
+							continue
+						
+						
+						fi
+						
+						
+						#描述行之上有1行空行
+						if [ ! "$row1" ] && [ "$row2" ];then
+							sed -i "$des_row d" $paramFile
+							sed -i "$des_row d" $paramFile
+
+							[ $c -le $row_count ] && [ ! "$row3" ] && sed -i "$des_row d" $paramFile
+						
+						fi
+
+					done
+					
+					if [ "$move_str" ];then
+					
+						if [ $a3 = 1 ];then  #移到定位参数之前
+							position_row=`getRowNum $paramFile $a2 3`
+							sed -i "$position_row i $move_str\n" $paramFile
+
+							echo -e "\n已把参数$param_list 移动到 $a2 之前！"								
+						
+						elif [ $a3 = 2 ];then #移到定位参数之后
+							position_row=`getRowNum $paramFile $a2 3`
+							sed -i "$position_row a \\\n$move_str" $paramFile
+
+							echo -e "\n已把参数$param_list 移动到 $a2 之后！"								
+						
+						elif [ $a2 = 1 ];then #移到本参数块最前面
+							
+							sed -i "$param_block_1 a $move_str\n" $paramFile
+
+							echo -e "\n已把参数$param_list 移动到参数块最前面！"	
+							
+						elif [ $a2 = 2 ];then #移到本参数块最后面
+							blockName=`getRow $paramFile $param_block_1 | cut -d '-' -f 1 | sed 's/\#//g'`
+							blockName="\#$blockName-1"
+							param_block_2=`getPositionOfBlock "$blockName" 2`
+							
+							sed -i "$param_block_2 i \\\n$move_str" $paramFile
+							
+							
+							echo -e "\n已把参数$param_list 移动到参数块最后面！"	
+											
+						fi
+						
+						echo -ne "\n调整完成，是否立即同步数据？y/n："
+						read -n 1 a8
+						if [ "$a8" ] && ([ "$a8" = y ] || [ "$a8" = Y ]) ;then	
+							echo -e "\n\n正在同步......\n"
+							cd ./tool
+							sh ./sync.sh
+							cd ../
+							echo -ne "\n同步完成，按任意键返回操作界面："
+							read -n 1 a9
+							
+						fi							
+					
+					else
+						echo -ne "\n按任意键返回操作界面："
+						read -n 1 a9
+					
+					fi
+				
 				
 				fi
+					
+
+				
 			
-			
-			fi		
-		
-		fi	
+			fi
+
+
+		fi
 	
 	fi
-	
-
 fi
+
 
 
 #同步数据
@@ -669,6 +921,7 @@ done
 
 
 showConsole
+
 
 
 

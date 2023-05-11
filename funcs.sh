@@ -1320,3 +1320,44 @@ printBlock()
 }
 
 
+#获取某个参数所在的块位置
+# getPositionOfBlock paramName 1
+getPositionOfBlock()
+{
+
+        param111=$1
+        # 1--获取指定参数所在参数块的前分隔行行号    2--获取指定参数所在参数块的后分隔行行号   
+        mode=$2   
+        row_param222=`getRowNum $paramFile "$param111" 3`
+
+        block_start=''
+        block_end=''
+        if [ $row_param222 ];then
+                if [ $mode = 1 ];then
+                        let row_param222=row_param222-1
+                        for (( row=$row_param222; row>0; row-- )) do
+                                row_str333=$(sed -n "${row}p" $paramFile)
+                                [ "$row_str333" ] && [[ "$row_str333" = *=====* ]] && block_start=$row && break
+                        done
+
+                fi
+
+                if [ $mode = 2 ];then
+                        let row_param222=row_param222+1
+                        for (( row=$row_param222; row<100000; row++ )) do
+                                row_str333=$(sed -n "${row}p" $paramFile)
+                                [ "$row_str333" ] && [[ "$row_str333" = *=====* ]] && block_end=$row && break
+                        done
+
+                fi
+
+        fi
+
+        [ $mode = 1 ] && echo $block_start
+        [ $mode = 2 ] && echo $block_end
+
+
+}
+
+
+
