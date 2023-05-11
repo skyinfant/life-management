@@ -1241,3 +1241,82 @@ clearStrs()
 }
 
 
+#获取db中符合指定条件的记录的数量    ge、gt、le、lt、eq、ne
+#不带时间条件： db_count today_income ge 500
+#带时间条件：   db_count today_income ge 500 2023         db_count today_income ge 500 2023.2
+db_count()
+{
+
+        col=`getParamCol $1 $dailyData`
+        symbol=$2
+        compareNum=$3
+        condition=$4
+        des_param="`getVal des_$1`"
+        str=''
+        [ $condition ] && str="$condition    "
+    count1=0
+    count2=0
+    
+    output=''
+        [ $symbol = ge ] && symbol='>=' && output="echo \"$str$des_param    大于等于 $compareNum 的天数：\$count1    小于 $compareNum 的天数：\$count2\""
+        [ $symbol = gt ] && symbol='>' && output="echo \"$str$des_param    大于 $compareNum 的天数：\$count1    小于等于 $compareNum 的天数：\$count2\""
+        [ $symbol = le ] && symbol='<=' && output="echo \"$str$des_param    小于等于 $compareNum 的天数：\$count1    大于 $compareNum 的天数：\$count2\""
+        [ $symbol = lt ] && symbol='<' && output="echo \"$str$des_param    小于 $compareNum 的天数：\$count1    大于等于 $compareNum 的天数：\$count2\""
+        [ $symbol = eq ] && symbol='==' && output="echo \"$str$des_param    等于 $compareNum 的天数：\$count1    不等于 $compareNum 的天数：\$count2\""
+        [ $symbol = ne ] && symbol='!=' && output="echo \"$str$des_param    不等于 $compareNum 的天数：\$count1    等于 $compareNum 的天数：\$count2\""
+
+        all=''
+        if [ $col ];then
+                if [ $condition ];then
+                        begin=`grep -n "^$condition" $dailyData | head -1 | cut -d ':' -f 1`
+                        end=`grep -n "^$condition" $dailyData | tail -1 | cut -d ':' -f 1`
+                        [ $begin ] && cmd="awk -F ',' '(NR>=$begin && NR<=$end){print \$$col}' \$dailyData" && all=`eval $cmd`
+
+                else
+                        cmd="awk -F ',' '(NR>2){print \$$col}' \$dailyData"
+                        all=`eval $cmd`
+                fi
+
+                if [ "$all" ];then
+
+                    arr=(${all// / })
+                    len=${#arr[*]i}
+
+                for ((i = 0; i < $len; i++)); do
+
+                        num=${arr[$i]}
+                                if [ `compare $num "$symbol" $compareNum` ];then
+                                        let count1=count1+1
+                                else
+                                        let count2=count2+1
+                                fi
+
+                        done
+
+                eval "$output"
+
+                else
+
+                        echo '没有符合条件的记录！'
+                fi
+
+        else
+
+                echo 参数 $1 不存在！
+
+        fi
+
+
+}
+
+
+#输出所有的参数块名称
+printBlock()
+{
+
+	aa=`cat params.sh | grep '^\\#' | grep '\\-1' | cut -c 2- | sed 's/=//g' | cut -d ' ' -f 1 | sed 's/-1//g'` && \
+	echo -e '' && echo $aa |  awk '{for (i=1;i<=NF;i++)printf("%s    ", $i);print ""}'
+
+}
+
+
