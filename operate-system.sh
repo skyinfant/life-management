@@ -286,8 +286,8 @@ if [ $key = 3 ];then
 					[ "$row1" ] && [ $row1 -le $core_row ] && echo -e "\n不允许调整核心参数块 $a1 的位置！" && flag=2
 
 					if [ $flag = 1 ];then
-
-						backup_param_file
+						#备份
+						#backup_param_file
 						
 						let n1=row1-1
 						let n2=row1-2
