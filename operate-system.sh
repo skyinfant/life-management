@@ -244,7 +244,7 @@ fi
 #调整参数位置
 if [ $key = 3 ];then
     clear
-	echo -ne "\n\n1--调整参数块的位置   2--调整参数的位置："
+	echo -ne "\n\n1--调整参数块的位置   2--调整参数的位置(块内调整)："
 	read b
 	
 	#调整参数块的位置
@@ -406,28 +406,66 @@ if [ $key = 3 ];then
 		
 		fi
 	
-	#调整参数的位置
+	#调整参数的位置(块内调整)
 	elif [ $b ] && [ $b = 2 ];then
 		echo -ne "\n\n请输入要调整位置的参数名称(英文),可填多个，必须是同一个块的，以空格分隔，不要填描述参数："
 		read a1
 		if [ "$a1" ];then	
 
-			echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本块最前面   2--调整到本块最后面："
+			echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本参数块最前面   2--调整到本参数块最后面："
 			read a2
 			
 			if [ "$a2" ];then
+				flag_1=1
+				#有定位参数
 				if [ ! `isNum $a2` ];then
 					if [ ! `getRowNum $paramFile $a2 3` ];then 
 						echo -e "\n定位参数 $a2 不存在！"
+						flag_1=2
 						
 						echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本块最前面   2--调整到本块最后面："
-						read a2							
-						
-					fi
-				fi
+						read a2		
 
-				if [ ! `isNum $a2` ];then
-					#有定位参数
+						if [ ! `getRowNum $paramFile $a2 3` ];then
+							echo -e "\n定位参数 $a2 不存在！"
+						else
+							flag_1=1
+						fi
+
+					fi
+					
+					
+					if [ $flag_1 = 1 ];then
+						#定位参数所在的块的上分隔行行号
+						block_start1=`getPositionOfBlock $a2 1`	
+						temp=''
+						
+						arr=(${a1// / })
+						len=${#arr[*]i}						
+						for ((i = 0; i < $len; i++)); do
+							param=${arr[$i]}
+							
+							#参数行位置
+							row_num1=`getRowNum $paramFile $param 3`
+							
+							[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
+							
+							[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
+					
+							[ `getPositionOfBlock $param 1` != $block_start1 ] && echo -e "\n参数 $param 与定位参数 $a2 不是处于同一个块！" && continue
+							temp="$temp $param"					
+
+						done	
+						
+						temp=`echo $temp | trim`
+						a1=$temp					
+					
+					fi
+					
+				fi
+				
+				#有定位参数
+				if [ $flag_1 = 1 ] && [ ! `isNum $a2` ];then
 					echo -ne "\n\n调整位置  1--把参数 "$a1" 调到 $a2 之前   2--把参数块 "$a1" 调到 $a2 之后："
 					read a3	
 					
@@ -437,11 +475,21 @@ if [ $key = 3 ];then
 					
 					if [ $flag2 = 2 ];then
 						echo -ne "\n\n调整位置  1--把参数 "$a1" 调到 $a2 之前   2--把参数块 "$a1" 调到 $a2 之后："
-						read a3							
+						read a3
+
+						[ $a3 ] && [ $a3 = 1 ] && [[ $a2 != des_* ]] && echo -e "\n$a2 不是描述参数，不能移动到非描述参数之前！" && a3=''
+						[ $a3 ] && [ $a3 = 2 ] && [[ $a2 = des_* ]] && echo -e "\n$a2 是描述参数，不能移动到描述参数之后！" && a3=''
+					
 					fi
-				else
+					
+				elif [ $flag_1 = 1 ];then
 					#无定位参数
 					a3=25
+					
+				else
+					#定位参数不存在
+					a3=''
+			
 				fi
 				
 				if [ `isNum "$a3"` ];then
@@ -488,29 +536,17 @@ if [ $key = 3 ];then
 
 					arr=(${a1// / })
 					len=${#arr[*]i}
-					
+					#真实有效的参数串
 					param_list=''
-					move_str=''						
+					#要移动的参数行
+					move_str=''
 					for ((i = 0; i < $len; i++)); do
 
 						param=${arr[$i]}
 						
 						#参数行位置
 						row_num1=`getRowNum $paramFile $param 3`
-						
-						[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
-						
-						[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
-						
-						if [ $a3 -ne 25 ];then   #有定位参数
-							#定位参数的块位置				
-							block_start1=`getPositionOfBlock $a2 1`
-							block_start2=`getPositionOfBlock $param 1`					
-							[ $block_start1 != $block_start2 ] && echo -e "\n参数 $param 与定位参数 $a2 不是处于同一个块！" && continue							
 							
-						fi
-	
-						
 						#去重
 						[ "`echo $param_list | grep -w $param`" ] && continue
 						[ $a2 = $param ] && continue
@@ -617,8 +653,8 @@ if [ $key = 3 ];then
 							
 						elif [ $a2 = 2 ];then #移到本参数块最后面
 							blockName=`getRow $paramFile $param_block_1 | cut -d '-' -f 1 | sed 's/\#//g'`
-							blockName="\#$blockName-1"
-							param_block_2=`getPositionOfBlock "$blockName" 2`
+							blockName="\#$blockName-2"
+							param_block_2=`getRowNum $paramFile "$blockName" 3`
 							
 							sed -i "$param_block_2 i \\\n$move_str" $paramFile
 							
@@ -644,12 +680,12 @@ if [ $key = 3 ];then
 						read -n 1 a9
 					
 					fi
-				
+					
+				else	
+					echo -ne "\n按任意键返回操作界面："
+					read -n 1 a9				
 				
 				fi
-					
-
-				
 			
 			fi
 
@@ -921,13 +957,6 @@ done
 
 
 showConsole
-
-
-
-
-
-
-
 
 
 
