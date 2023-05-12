@@ -463,14 +463,14 @@ if [ $key = 3 ];then
 
 						if [ "$a2" ] && [ ! `isNum $a2` ] && [ ! `getRowNum $paramFile $a2 3` ];then
 							echo -e "\n定位参数 $a2 不存在！"
-						elif [ `isNum $a2` ];then
+						elif [ "$a2" ];then
 							flag_1=1
 						fi
 
 					fi
 					
 					
-					if [ $flag_1 = 1 ];then
+					if [ $flag_1 = 1 ] && [ ! `isNum $a2` ];then
 						#定位参数所在的块的上分隔行行号
 						block_start1=`getPositionOfBlock $a2 1`	
 						temp=''
