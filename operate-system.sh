@@ -286,6 +286,7 @@ if [ $key = 3 ];then
 					[ "$row1" ] && [ $row1 -le $core_row ] && echo -e "\n不允许调整核心参数块 $a1 的位置！" && flag=2
 
 					if [ $flag = 1 ];then
+
 						#备份
 						#backup_param_file
 						
@@ -410,10 +411,44 @@ if [ $key = 3 ];then
 	elif [ $b ] && [ $b = 2 ];then
 		echo -ne "\n\n请输入要调整位置的参数名称(英文),可填多个，必须是同一个块的，以空格分隔，不要填描述参数："
 		read a1
-		if [ "$a1" ];then	
+		if [ "$a1" ];then
+		
+			arr=(${a1// / })
+			len=${#arr[*]i}
+			#要移动的第一个参数所在的块的前分隔行行号
+			param_block_1=''
+			head_param=''			
+			temp=''
+			for ((i = 0; i < $len; i++)); do
+				param=${arr[$i]}
+				
+				#参数行位置
+				row_num1=`getRowNum $paramFile $param 3`
+				
+				[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
+				
+				[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
+			
+				if [ $param_block_1 ];then
+					[ `getPositionOfBlock $param 1` != $param_block_1 ] && echo -e "\n参数 $param 与 $head_param 不是处于同一个块！" && continue
+					temp="$temp $param"
+				else
+				
+					param_block_1=`getPositionOfBlock $param 1`
+					
+					temp=$param
+					head_param=$param
+				
+				fi							
 
-			echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本参数块最前面   2--调整到本参数块最后面："
-			read a2
+			done	
+			
+			a1=$temp
+			
+			if [ "$a1" ];then
+				echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本参数块最前面   2--调整到本参数块最后面："
+				read a2
+			fi
 			
 			if [ "$a2" ];then
 				flag_1=1
@@ -426,9 +461,9 @@ if [ $key = 3 ];then
 						echo -ne "\n\n请输入用于定位的参数名称(调整到该参数之前或之后)，或者：1--调整到本块最前面   2--调整到本块最后面："
 						read a2		
 
-						if [ ! `getRowNum $paramFile $a2 3` ];then
+						if [ "$a2" ] && [ ! `isNum $a2` ] && [ ! `getRowNum $paramFile $a2 3` ];then
 							echo -e "\n定位参数 $a2 不存在！"
-						else
+						elif [ `isNum $a2` ];then
 							flag_1=1
 						fi
 
@@ -444,14 +479,8 @@ if [ $key = 3 ];then
 						len=${#arr[*]i}						
 						for ((i = 0; i < $len; i++)); do
 							param=${arr[$i]}
-							
-							#参数行位置
-							row_num1=`getRowNum $paramFile $param 3`
-							
-							[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
-							
-							[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
 					
+							[ $a2 = $param ] && continue
 							[ `getPositionOfBlock $param 1` != $block_start1 ] && echo -e "\n参数 $param 与定位参数 $a2 不是处于同一个块！" && continue
 							temp="$temp $param"					
 
@@ -462,7 +491,7 @@ if [ $key = 3 ];then
 							a1=$temp						
 						else
 							flag_1=2
-						fi	
+						fi
 					
 					fi
 					
@@ -497,46 +526,6 @@ if [ $key = 3 ];then
 				fi
 				
 				if [ `isNum "$a3"` ];then
-					arr=(${a1// / })
-					len=${#arr[*]i}
-					
-					#要移动的参数所在的块的前分隔行行号
-					param_block_1=''	
-
-					#无定位参数
-					if [ $a3 = 25 ];then
-
-						temp=''
-						head_param=''
-						for ((i = 0; i < $len; i++)); do
-							param=${arr[$i]}
-							
-							#参数行位置
-							row_num1=`getRowNum $paramFile $param 3`
-							
-							[ ! $row_num1 ] && echo -e "\n参数 $param 不存在！" && continue
-							
-							[[ $param = des_* ]] && echo -e "\n$param 是描述参数！" && continue
-						
-							if [ $param_block_1 ];then
-								[ `getPositionOfBlock $param 1` != $param_block_1 ] && echo -e "\n参数 $param 与 $head_param 不是处于同一个块！" && continue
-								temp="$temp $param"
-							else
-							
-								param_block_1=`getPositionOfBlock $param 1`
-								
-								temp=$param
-								head_param=$param
-							
-							fi							
-
-						done	
-						
-						a1=$temp
-					
-					fi
-					
-					
 
 					arr=(${a1// / })
 					len=${#arr[*]i}
@@ -553,7 +542,6 @@ if [ $key = 3 ];then
 							
 						#去重
 						[ "`echo $param_list | grep -w $param`" ] && continue
-						[ $a2 = $param ] && continue
 						param_list="$param_list $param"
 						
 						#参数行内容
@@ -690,6 +678,11 @@ if [ $key = 3 ];then
 					read -n 1 a9				
 				
 				fi
+				
+			else
+			
+				echo -ne "\n按任意键返回操作界面："
+				read -n 1 a9				
 			
 			fi
 
@@ -961,7 +954,6 @@ done
 
 
 showConsole
-
 
 
 
