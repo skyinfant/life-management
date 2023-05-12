@@ -458,7 +458,11 @@ if [ $key = 3 ];then
 						done	
 						
 						temp=`echo $temp | trim`
-						a1=$temp					
+						if [ "$temp" ];then
+							a1=$temp						
+						else
+							flag_1=2
+						fi	
 					
 					fi
 					
