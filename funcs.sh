@@ -1259,12 +1259,12 @@ db_count()
     count2=0
     
     output=''
-        [ $symbol = ge ] && symbol='>=' && output="echo \"$str$des_param    大于等于 $compareNum 的天数：\$count1    小于 $compareNum 的天数：\$count2\""
-        [ $symbol = gt ] && symbol='>' && output="echo \"$str$des_param    大于 $compareNum 的天数：\$count1    小于等于 $compareNum 的天数：\$count2\""
-        [ $symbol = le ] && symbol='<=' && output="echo \"$str$des_param    小于等于 $compareNum 的天数：\$count1    大于 $compareNum 的天数：\$count2\""
-        [ $symbol = lt ] && symbol='<' && output="echo \"$str$des_param    小于 $compareNum 的天数：\$count1    大于等于 $compareNum 的天数：\$count2\""
-        [ $symbol = eq ] && symbol='==' && output="echo \"$str$des_param    等于 $compareNum 的天数：\$count1    不等于 $compareNum 的天数：\$count2\""
-        [ $symbol = ne ] && symbol='!=' && output="echo \"$str$des_param    不等于 $compareNum 的天数：\$count1    等于 $compareNum 的天数：\$count2\""
+        [ $symbol = ge ] && symbol='>=' && output="echo -e \"\n$str$des_param    大于等于 $compareNum 的天数：\$count1    小于 $compareNum 的天数：\$count2\n\""
+        [ $symbol = gt ] && symbol='>' && output="echo -e \"\n$str$des_param    大于 $compareNum 的天数：\$count1    小于等于 $compareNum 的天数：\$count2\n\""
+        [ $symbol = le ] && symbol='<=' && output="echo -e \"\n$str$des_param    小于等于 $compareNum 的天数：\$count1    大于 $compareNum 的天数：\$count2\n\""
+        [ $symbol = lt ] && symbol='<' && output="echo -e \"\n$str$des_param    小于 $compareNum 的天数：\$count1    大于等于 $compareNum 的天数：\$count2\n\""
+        [ $symbol = eq ] && symbol='==' && output="echo -e \"\n$str$des_param    等于 $compareNum 的天数：\$count1    不等于 $compareNum 的天数：\$count2\n\""
+        [ $symbol = ne ] && symbol='!=' && output="echo -e \"\n$str$des_param    不等于 $compareNum 的天数：\$count1    等于 $compareNum 的天数：\$count2\n\""
 
         all=''
         if [ $col ];then
@@ -1298,17 +1298,18 @@ db_count()
 
                 else
 
-                        echo '没有符合条件的记录！'
+                        echo -e "\n没有符合条件的记录！\n"
                 fi
 
         else
 
-                echo 参数 $param922 不存在！
+                echo -e "\n参数 $param922 不存在！\n"
 
         fi
 
 
 }
+
 
 
 #输出所有的参数块名称
