@@ -1242,16 +1242,17 @@ clearStrs()
 
 
 #获取db中符合指定条件的记录的数量    ge、gt、le、lt、eq、ne
-#不带时间条件： db_count today_income ge 500
-#带时间条件：   db_count today_income ge 500 2023         db_count today_income ge 500 2023.2
+#不带时间条件： db_count today_income ge 500    或者：db_count income ge 500
+#带时间条件：   db_count income ge 500 2023         db_count income ge 500 2023.2
 db_count()
 {
-
-        col=`getParamCol $1 $dailyData`
+        param922=$1
+        [[ "$param922" != today_* ]] && param922="today_$param922"
+        col=`getParamCol $param922 $dailyData`
         symbol=$2
         compareNum=$3
         condition=$4
-	    des_param="`getVal des_$1 | sed 's/今日//g'`"
+        des_param="`getVal des_$param922 | sed 's/今日//g'`"
         str=''
         [ $condition ] && str="$condition    "
     count1=0
@@ -1302,7 +1303,7 @@ db_count()
 
         else
 
-                echo 参数 $1 不存在！
+                echo 参数 $param922 不存在！
 
         fi
 
@@ -1359,5 +1360,15 @@ getPositionOfBlock()
 
 }
 
+
+#清空备份文件
+del_bak_file()
+{
+
+        rm ./data/bak/*  2> /dev/null 
+        rm ./data/db/bak/* 2> /dev/null 
+        echo -e "\n删除成功！\n"
+
+}
 
 
